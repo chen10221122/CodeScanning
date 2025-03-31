@@ -102,20 +102,24 @@ def find_component_references(content: str, component_name: str):
         List[str]: 组件被引用的行号列表
     """
     patterns = [
-        # JSX组件引用 - 增强版，支持更多JSX标签形式和属性模式
-        f'<{component_name}(?:\s+[^>]*>|\s*/?>|>|\s+[^>]*/>)',
-        # 组件作为React元素使用 - 新增模式，捕获如 <AiMain prop={value} /> 形式
-        f'<{component_name}\s+(?:[^/>]*?)(?:/>|>)',
-        # 组件作为变量使用 - 新增模式，捕获如 {isCondition && <AiMain />} 形式
-        f'(?:&&|\?|\:|\(|\[|,|=|\s+)<{component_name}(?:\s+[^>]*>|\s*/?>|>|\s+[^>]*/>)',
-        # styled-components引用 - 修复正则表达式中的错误
-        f'const\s+[A-Z][\w]*?\s*=\s*styled(?:\({component_name}\)|\.[\w]+`)',
-        # HOC包装引用
-        f'(?:connect|withRouter|withStyles|withTheme|with[A-Z][\w]*)\({component_name}\)',
-        # React.memo引用
-        f'(?:React\.)?memo\({component_name}\)',
-        # React.forwardRef引用
-        f'(?:React\.)?forwardRef\({component_name}\)'
+        # 1️⃣ 允许 `(` 号包裹的 JSX 组件匹配（单行 & 跨行）
+        rf'[(]?\s*<{component_name}(\s+[^/>]*?)?/?\s*>',  
+        rf'[(]?\s*<{component_name}(\s+[^>]*?)?>.*?</{component_name}>',
+
+        # 2️⃣ styled-components 组件
+        rf'const\s+[A-Z][\w]*?\s*=\s*styled\(\s*{component_name}\s*\)',
+
+        # 3️⃣ HOC 包装
+        rf'(?:connect|withRouter|withStyles|withTheme|with[A-Z][\w]*)\(\s*{component_name}\s*\)',
+
+        # 4️⃣ React.memo & forwardRef
+        rf'(?:React\.)?(memo|forwardRef)\(\s*{component_name}\s*\)',
+
+        # 5️⃣ lazy 动态导入
+        rf'(?:React\.)?lazy\(\s*\(\s*=>\s*import\([\'"]{component_name}[\'"]\)\s*\)\s*\)',
+
+        # 6️⃣ Suspense 包装组件
+        rf'<Suspense[^>]*?>.*?<{component_name}[^>]*?>.*?</Suspense>',
     ]
     references = []
     for pattern in patterns:

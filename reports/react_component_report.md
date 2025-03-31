@@ -2,8 +2,8 @@
 
 ## 元数据
 - **文档类型**: React组件分析
-- **生成时间**: 2025-03-31 13:47:35
-- **组件总数**: 28
+- **生成时间**: 2025-03-31 15:22:40
+- **组件总数**: 26
 - **文档用途**: 组件依赖关系分析
 - **适用场景**: 代码审查、架构分析、重构规划
 
@@ -17,7 +17,6 @@
 - **Content**: 定义于 `d:\workspace\demo\CodeScanning2\ai\modules\content\index.tsx`
 - **CustomService**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\customService.tsx`
 - **EditStyle**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\queryArea\index.tsx`
-- **FEEDBACK_TYPE**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\feedback.tsx`
 - **Feedback**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\feedback.tsx`
 - **Func**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\queryArea\func.tsx`
 - **History**: 定义于 `d:\workspace\demo\CodeScanning2\ai\modules\history.tsx`
@@ -27,7 +26,6 @@
 - **ListRenderer**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\ListRenderer.tsx`
 - **MainTags**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\queryArea\tags.tsx`
 - **Outer**: 定义于 `d:\workspace\demo\CodeScanning2\ai\modules\history.tsx`
-- **PAGE_SIZE**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\queryArea\search.tsx`
 - **QueryArea**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\queryArea\index.tsx`
 - **StopButton**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\stopButton.tsx`
 - **Tags**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\queryArea\tags.tsx`
@@ -46,7 +44,7 @@
 **被引用次数**: 2
 **引用位置**:
 - `index.tsx:63`
-- `side.tsx:50`
+- `side.tsx:48`
 **组件类型**: 核心组件
 
 ### 组件: AiMain
@@ -71,7 +69,7 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\queryArea\tags.tsx:20`
+- `components\queryArea\tags.tsx:19`
 **组件类型**: UI组件
 
 ### 组件: Card
@@ -80,7 +78,7 @@
 **导入来源**: `./card`
 **被引用次数**: 1
 **引用位置**:
-- `components\answer\content.tsx:93`
+- `components\answer\content.tsx:92`
 **组件类型**: UI组件
 
 ### 组件: Container
@@ -89,13 +87,13 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 7
 **引用位置**:
-- `components\answer\card.tsx:20`
-- `components\answer\content.tsx:86`
-- `components\answer\customService.tsx:15`
-- `components\answer\feedback.tsx:103`
-- `components\answer\stopButton.tsx:7`
-- `components\answer\thinking.tsx:27`
-- `components\answer\title.tsx:61`
+- `components\answer\card.tsx:19`
+- `components\answer\content.tsx:85`
+- `components\answer\customService.tsx:14`
+- `components\answer\feedback.tsx:102`
+- `components\answer\stopButton.tsx:6`
+- `components\answer\thinking.tsx:26`
+- `components\answer\title.tsx:60`
 **组件类型**: UI组件
 
 ### 组件: Content
@@ -120,15 +118,7 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\queryArea\index.tsx:343`
-**组件类型**: UI组件
-
-### 组件: FEEDBACK_TYPE
-**组件ID**: `FEEDBACK_TYPE`
-**定义位置**: `d:\workspace\demo\CodeScanning2\ai\components\answer\feedback.tsx`
-**导入来源**: 无外部导入或未检测到
-**被引用次数**: 0
-**引用位置**: 未在其他组件中被引用
+- `components\queryArea\index.tsx:342`
 **组件类型**: UI组件
 
 ### 组件: Feedback
@@ -171,7 +161,7 @@
 **导入来源**: `./components/image`
 **被引用次数**: 1
 **引用位置**:
-- `modules\leftTab\index.tsx:38`
+- `modules\leftTab\index.tsx:37`
 **组件类型**: UI组件
 
 ### 组件: LeftTab
@@ -196,7 +186,7 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\queryArea\tags.tsx:27`
+- `components\queryArea\tags.tsx:26`
 **组件类型**: UI组件
 
 ### 组件: Outer
@@ -205,19 +195,11 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 4
 **引用位置**:
-- `index.tsx:46`
-- `index2.tsx:10`
-- `side.tsx:45`
-- `modules\history.tsx:53`
+- `index.tsx:45`
+- `index2.tsx:9`
+- `side.tsx:44`
+- `modules\history.tsx:52`
 **组件类型**: 模块组件
-
-### 组件: PAGE_SIZE
-**组件ID**: `PAGE_SIZE`
-**定义位置**: `d:\workspace\demo\CodeScanning2\ai\components\queryArea\search.tsx`
-**导入来源**: 无外部导入或未检测到
-**被引用次数**: 0
-**引用位置**: 未在其他组件中被引用
-**组件类型**: UI组件
 
 ### 组件: QueryArea
 **组件ID**: `QueryArea`
@@ -225,8 +207,8 @@
 **导入来源**: `../../components/queryArea`
 **被引用次数**: 2
 **引用位置**:
-- `modules\main.tsx:26`
-- `modules\content\index.tsx:79`
+- `modules\main.tsx:25`
+- `modules\content\index.tsx:78`
 **组件类型**: UI组件
 
 ### 组件: StopButton
@@ -275,7 +257,7 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\svg\base.tsx:52`
+- `components\svg\base.tsx:51`
 **组件类型**: UI组件
 
 ### 组件: Wrapper
@@ -284,15 +266,15 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 9
 **引用位置**:
-- `aiCore.tsx:303`
-- `components\ListRenderer.tsx:104`
-- `components\queryArea\func.tsx:40`
-- `components\queryArea\index.tsx:330`
-- `components\queryArea\search.tsx:119`
-- `components\tool\index.tsx:10`
-- `modules\main.tsx:24`
-- `modules\content\index.tsx:17`
-- `modules\leftTab\index.tsx:31`
+- `aiCore.tsx:302`
+- `components\ListRenderer.tsx:103`
+- `components\queryArea\func.tsx:39`
+- `components\queryArea\index.tsx:329`
+- `components\queryArea\search.tsx:118`
+- `components\tool\index.tsx:9`
+- `modules\main.tsx:23`
+- `modules\content\index.tsx:16`
+- `modules\leftTab\index.tsx:30`
 **组件类型**: 模块组件
 
 ## 组件依赖关系
@@ -345,12 +327,10 @@
 - **AiSide**: 定义于 `d:\workspace\demo\CodeScanning2\ai\side.tsx`
 - **Content**: 定义于 `d:\workspace\demo\CodeScanning2\ai\modules\content\index.tsx`
 - **CustomService**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\customService.tsx`
-- **FEEDBACK_TYPE**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\feedback.tsx`
 - **Feedback**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\feedback.tsx`
 - **History**: 定义于 `d:\workspace\demo\CodeScanning2\ai\modules\history.tsx`
 - **LeftTab**: 定义于 `d:\workspace\demo\CodeScanning2\ai\modules\leftTab\index.tsx`
 - **ListRenderer**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\ListRenderer.tsx`
-- **PAGE_SIZE**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\queryArea\search.tsx`
 - **StopButton**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\stopButton.tsx`
 - **Tags**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\queryArea\tags.tsx`
 - **Thinking**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\thinking.tsx`
