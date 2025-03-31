@@ -102,26 +102,44 @@ def find_component_references(content: str, component_name: str):
         List[str]: 组件被引用的行号列表
     """
     patterns = [
-        # 1️⃣ 允许 `(` 号包裹的 JSX 组件匹配（单行 & 跨行）
-        rf'[(]?\s*<{component_name}(\s+[^/>]*?)?/?\s*>',  
-        rf'[(]?\s*<{component_name}(\s+[^>]*?)?>.*?</{component_name}>',
+        # 1️⃣ **匹配 JSX 组件完整写法**（支持多行属性）
+        # ✅ `<AiMain prop1="xx" prop2={xx}> ... </AiMain>`
+        rf'<{component_name}[^>]*?>[\s\S]*?</{component_name}>',
 
-        # 2️⃣ styled-components 组件
+        # 2️⃣ **匹配 JSX 自闭合组件**（即无 children）
+        # ✅ `<AiMain prop1="xx" prop2={xx} />`
+        rf'<{component_name}[^/>]*/>',
+
+        # 3️⃣ **支持 JSX 组件在三元运算符中的情况**
+        # ✅ `condition ? <AiMain prop1="xx" /> : <OtherComponent />`
+        rf'[(]?\s*<{component_name}[^>]*?>[\s\S]*?</{component_name}>',
+        rf'[(]?\s*<{component_name}[^/>]*/>',
+
+        # 4️⃣ **styled-components 样式组件**
+        # ✅ `const StyledAiMain = styled(AiMain)`
         rf'const\s+[A-Z][\w]*?\s*=\s*styled\(\s*{component_name}\s*\)',
 
-        # 3️⃣ HOC 包装
+        # 5️⃣ **HOC 高阶组件包装**
+        # ✅ `export default withRouter(AiMain);`
+        # ✅ `export default connect(mapState, mapDispatch)(AiMain);`
         rf'(?:connect|withRouter|withStyles|withTheme|with[A-Z][\w]*)\(\s*{component_name}\s*\)',
 
-        # 4️⃣ React.memo & forwardRef
+        # 6️⃣ **React.memo 或 forwardRef 包装**
+        # ✅ `export default React.memo(AiMain);`
+        # ✅ `export default React.forwardRef(AiMain);`
         rf'(?:React\.)?(memo|forwardRef)\(\s*{component_name}\s*\)',
 
-        # 5️⃣ lazy 动态导入
+        # 7️⃣ **React.lazy 动态导入**
+        # ✅ `const LazyAiMain = React.lazy(() => import("./AiMain"));`
         rf'(?:React\.)?lazy\(\s*\(\s*=>\s*import\([\'"]{component_name}[\'"]\)\s*\)\s*\)',
 
-        # 6️⃣ Suspense 包装组件
-        rf'<Suspense[^>]*?>.*?<{component_name}[^>]*?>.*?</Suspense>',
+        # 8️⃣ **Suspense 包装的组件**
+        # ✅ `<Suspense fallback={<Loader />}><AiMain /></Suspense>`
+        rf'<Suspense[^>]*?>[\s\S]*?<{component_name}[^>]*?>[\s\S]*?</Suspense>',
     ]
+
     references = []
     for pattern in patterns:
-        references.extend(re.finditer(pattern, content))
+        references.extend(re.finditer(pattern, content, re.DOTALL))
+
     return [str(content[:m.start()].count('\n') + 1) for m in references]
