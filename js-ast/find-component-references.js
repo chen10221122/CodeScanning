@@ -32,7 +32,9 @@ function traverseJSXContainer(path, componentName, references) {
 
 // 辅助函数：检测 JSX 元素名称
 function checkJSXName(nameNode, componentName, references) {
-    if (t.isJSXIdentifier(nameNode, { name: componentName })) {
+    if (t.isJSXIdentifier(nameNode, {
+            name: componentName
+        })) {
         addLineNumber(nameNode.loc, references);
         return;
     }
@@ -69,8 +71,16 @@ function findComponentReferences(content, componentName) {
 
             // 匹配三元表达式中的 JSX（如 condition ? <Comp /> : <AiMain />）
             ConditionalExpression(path) {
-                traverseJSXContainer(path.get('consequent'), componentName, references);
-                traverseJSXContainer(path.get('alternate'), componentName, references);
+                const consequent = path.get('consequent');
+                const alternate = path.get('alternate');
+
+                // 遍历 true 分支（consequent）和 false 分支（alternate）
+                if (t.isJSXElement(consequent.node)) {
+                    traverseJSXContainer(consequent, componentName, references);
+                }
+                if (t.isJSXElement(alternate.node)) {
+                    traverseJSXContainer(alternate, componentName, references);
+                }
             },
 
             // 匹配逻辑表达式中的 JSX（如 {show && <AiMain />}）
@@ -88,12 +98,16 @@ function findComponentReferences(content, componentName) {
                 const callee = path.node.callee;
                 const args = path.node.arguments;
 
-                if (t.isIdentifier(callee, { name: componentName })) {
+                if (t.isIdentifier(callee, {
+                        name: componentName
+                    })) {
                     addLineNumber(callee.loc, references);
                 }
 
                 args.forEach(arg => {
-                    if (t.isIdentifier(arg, { name: componentName })) {
+                    if (t.isIdentifier(arg, {
+                            name: componentName
+                        })) {
                         addLineNumber(arg.loc, references);
                     }
                 });
@@ -103,8 +117,12 @@ function findComponentReferences(content, componentName) {
             TaggedTemplateExpression(path) {
                 if (
                     t.isCallExpression(path.node.tag) &&
-                    t.isIdentifier(path.node.tag.callee, { name: 'styled' }) &&
-                    t.isIdentifier(path.node.tag.arguments[0], { name: componentName })
+                    t.isIdentifier(path.node.tag.callee, {
+                        name: 'styled'
+                    }) &&
+                    t.isIdentifier(path.node.tag.arguments[0], {
+                        name: componentName
+                    })
                 ) {
                     addLineNumber(path.node.tag.arguments[0].loc, references);
                 }
