@@ -88,70 +88,7 @@ def find_component_definitions(content: str):
                 components.add(component_name)
     return components
 
-# def find_component_references(content: str, component_name: str):
-#     """查找特定组件的引用
-    
-#     查找文件中对指定组件的所有引用，包括：
-#     - JSX标签形式的引用
-#     - styled-components中的引用
-#     - HOC包装中的引用
-#     - React.memo和forwardRef中的引用
-    
-#     Args:
-#         content (str): 要分析的文件内容
-#         component_name (str): 要查找的组件名称
-    
-#     Returns:
-#         List[str]: 组件被引用的行号列表
-#     """
-#     escaped_name = re.escape(component_name)  # 转义特殊字符（如 . $ 等）
-#     patterns = [
-#         # 匹配完整 JSX 标签（支持任意多行属性）
-#         rf'<{escaped_name}\b(\s+[^>]*?|\s*?)>.*?</{escaped_name}\s*>',
-        
-#         # 匹配自闭合 JSX 标签（支持任意多行属性）
-#         rf'<{escaped_name}\b[\s\S]*?\/\s*>',
-        
-#         # 精准匹配三元运算符中的组件（如 : <AiMain ... />）
-#         rf':\s*<{escaped_name}\b[\s\S]*?<\/{escaped_name}\s*>|\/{escaped_name}\s*>',
-
-#         # 4️⃣ **styled-components 样式组件**
-#         # ✅ `const StyledAiMain = styled(AiMain)`
-#         rf'const\s+[A-Z][\w]*?\s*=\s*styled\(\s*{component_name}\s*\)',
-
-#         # 5️⃣ **HOC 高阶组件包装**
-#         # ✅ `export default withRouter(AiMain);`
-#         # ✅ `export default connect(mapState, mapDispatch)(AiMain);`
-#         rf'(?:connect|withRouter|withStyles|withTheme|with[A-Z][\w]*)\(\s*{component_name}\s*\)',
-
-#         # 6️⃣ **React.memo 或 forwardRef 包装**
-#         # ✅ `export default React.memo(AiMain);`
-#         # ✅ `export default React.forwardRef(AiMain);`
-#         rf'(?:React\.)?(memo|forwardRef)\(\s*{component_name}\s*\)',
-
-#         # 7️⃣ **React.lazy 动态导入**
-#         # ✅ `const LazyAiMain = React.lazy(() => import("./AiMain"));`
-#         rf'(?:React\.)?lazy\(\s*\(\s*=>\s*import\([\'"]{component_name}[\'"]\)\s*\)\s*\)',
-
-#         # 8️⃣ **Suspense 包装的组件**
-#         # ✅ `<Suspense fallback={<Loader />}><AiMain /></Suspense>`
-#         rf'<Suspense[^>]*?>[\s\S]*?<{component_name}[^>]*?>[\s\S]*?</Suspense>',
-#     ]
-
-#     references = []
-#     for pattern in patterns:
-#         references.extend(re.finditer(pattern, content, re.DOTALL))
-
-#     line_numbers = set()
-#     for m in references:
-#         start = m.start()
-#         line_number = content[:start].count('\n') + 1
-#         line_numbers.add(line_number)
-
-#     return sorted(map(str, line_numbers))
-
-
-def find_component_references(content: str, component_name: str) -> list:
+def find_component_references(content: str, component_name: str):
     """查找特定组件的引用
     
     查找文件中对指定组件的所有引用，包括：
@@ -167,29 +104,125 @@ def find_component_references(content: str, component_name: str) -> list:
     Returns:
         List[str]: 组件被引用的行号列表
     """
-    # 获取 Node.js 脚本的绝对路径
-    js_script_path = Path(__file__).parent / "js-ast" / "find-component-references.js"
-    
-    # 调用 Node.js 脚本
-    cmd = [
-        'node',
-        str(js_script_path),
-        json.dumps([content, component_name])  # 传递参数
-    ]
-    
-    try:
-        result = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            encoding='utf-8',
-            check=True
+    escaped_name = re.escape(component_name)  # 转义特殊字符（如 . $ 等）
+    patterns = [
+        
+                # 核心匹配模式：处理各种 JSX 语法形态
+        rf'''
+        <{escaped_name}                # 组件开始标签
+        (?:                             # 匹配属性部分
+            \s+                         # 属性前的空格
+            (?:                         
+                [^>]*?                  # 非贪婪匹配属性（排除>符号）
+                |                       # 或空属性
+            )
+        )?                             
+        (?:                             # 匹配标签闭合方式
+            \/>                        # 自闭合标签
+            |                           # 或完整闭合标签
+            >.*?<\/{escaped_name}\s*>  
         )
-        lines = json.loads(result.stdout)
-        return [str(line) for line in lines]
-    except subprocess.CalledProcessError as e:
-        print("Node.js 脚本执行错误:", e.stderr)
-        return []
-    except json.JSONDecodeError:
-        print("解析 Node.js 输出失败")
-        return []
+        ''',
+        
+        # 处理三元表达式中的组件（如 : <AiMain />）
+        rf':\s*<{escaped_name}\b[^>]*>',
+        
+        # 匹配高阶组件形式（包括换行情况）
+        rf'''
+        (?:                         # 匹配 HOC 函数名
+            connect|withRouter|
+            styled|memo|forwardRef
+        )
+        $                          # 参数开始
+        [\s\n]*                     # 允许换行和空格
+        {escaped_name}              # 目标组件
+        [\s\n]*                     
+        $                          
+        '''
+        # 匹配完整 JSX 标签（支持任意多行属性）
+        rf'<{escaped_name}\b(\s+[^>]*?|\s*?)>.*?</{escaped_name}\s*>',
+        
+        # 匹配自闭合 JSX 标签（支持任意多行属性）
+        rf'<{escaped_name}\b[\s\S]*?\/\s*>',
+        
+        # 精准匹配三元运算符中的组件（如 : <AiMain ... />）
+        rf':\s*<{escaped_name}\b[\s\S]*?<\/{escaped_name}\s*>|\/{escaped_name}\s*>',
+
+        # 4️⃣ **styled-components 样式组件**
+        # ✅ `const StyledAiMain = styled(AiMain)`
+        rf'const\s+[A-Z][\w]*?\s*=\s*styled\(\s*{component_name}\s*\)',
+
+        # 5️⃣ **HOC 高阶组件包装**
+        # ✅ `export default withRouter(AiMain);`
+        # ✅ `export default connect(mapState, mapDispatch)(AiMain);`
+        rf'(?:connect|withRouter|withStyles|withTheme|with[A-Z][\w]*)\(\s*{component_name}\s*\)',
+
+        # 6️⃣ **React.memo 或 forwardRef 包装**
+        # ✅ `export default React.memo(AiMain);`
+        # ✅ `export default React.forwardRef(AiMain);`
+        rf'(?:React\.)?(memo|forwardRef)\(\s*{component_name}\s*\)',
+
+        # 7️⃣ **React.lazy 动态导入**
+        # ✅ `const LazyAiMain = React.lazy(() => import("./AiMain"));`
+        rf'(?:React\.)?lazy\(\s*\(\s*=>\s*import\([\'"]{component_name}[\'"]\)\s*\)\s*\)',
+
+        # 8️⃣ **Suspense 包装的组件**
+        # ✅ `<Suspense fallback={<Loader />}><AiMain /></Suspense>`
+        rf'<Suspense[^>]*?>[\s\S]*?<{component_name}[^>]*?>[\s\S]*?</Suspense>',
+    ]
+
+    references = []
+    for pattern in patterns:
+        references.extend(re.finditer(pattern, content, re.DOTALL))
+
+    line_numbers = set()
+    for m in references:
+        start = m.start()
+        line_number = content[:start].count('\n') + 1
+        line_numbers.add(line_number)
+
+    return sorted(map(str, line_numbers))
+
+
+# def find_component_references(content: str, component_name: str) -> list:
+#     """查找特定组件的引用
+    
+#     查找文件中对指定组件的所有引用，包括：
+#     - JSX标签形式的引用
+#     - styled-components中的引用
+#     - HOC包装中的引用
+#     - React.memo和forwardRef中的引用
+    
+#     Args:
+#         content (str): 要分析的文件内容
+#         component_name (str): 要查找的组件名称
+    
+#     Returns:
+#         List[str]: 组件被引用的行号列表
+#     """
+#     # 获取 Node.js 脚本的绝对路径
+#     js_script_path = Path(__file__).parent / "js-ast" / "find-component-references.js"
+    
+#     # 调用 Node.js 脚本
+#     cmd = [
+#         'node',
+#         str(js_script_path),
+#         json.dumps([content, component_name])  # 传递参数
+#     ]
+    
+#     try:
+#         result = subprocess.run(
+#             cmd,
+#             capture_output=True,
+#             text=True,
+#             encoding='utf-8',
+#             check=True
+#         )
+#         lines = json.loads(result.stdout)
+#         return [str(line) for line in lines]
+#     except subprocess.CalledProcessError as e:
+#         print("Node.js 脚本执行错误:", e.stderr)
+#         return []
+#     except json.JSONDecodeError:
+        # print("解析 Node.js 输出失败")
+        # return []

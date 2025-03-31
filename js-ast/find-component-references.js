@@ -74,18 +74,56 @@ function findComponentReferences(content, componentName) {
                 const consequent = path.get('consequent');
                 const alternate = path.get('alternate');
 
-                // 遍历 true 分支（consequent）和 false 分支（alternate）
-                if (t.isJSXElement(consequent.node)) {
-                    traverseJSXContainer(consequent, componentName, references);
+                function traverseExpression(expression, references) {
+                    if (!expression || !expression.node) return;
+
+                    // 直接是 JSX
+                    if (t.isJSXElement(expression.node) || t.isJSXFragment(expression.node)) {
+                        traverseJSXContainer(expression, componentName, references);
+                    }
+                    // 逻辑运算符（&&, ||） 可能 JSX 在 left 或 right
+                    else if (t.isLogicalExpression(expression.node)) {
+                        traverseExpression(expression.get('left'), references);
+                        traverseExpression(expression.get('right'), references);
+                    }
+                    // 条件表达式（condition ? <AiMain /> : <OtherComponent />）
+                    else if (t.isConditionalExpression(expression.node)) {
+                        traverseExpression(expression.get('consequent'), references);
+                        traverseExpression(expression.get('alternate'), references);
+                    }
+                    // 函数调用（如 getComponent()）
+                    else if (t.isCallExpression(expression.node)) {
+                        expression.get('arguments').forEach(arg => traverseExpression(arg, references));
+                    }
+                    // 变量（如 const MyComponent = AiMain; <MyComponent />）
+                    else if (t.isIdentifier(expression.node)) {
+                        const binding = expression.scope.getBinding(expression.node.name);
+                        if (binding && binding.path) {
+                            traverseExpression(binding.path.get('init'), references);
+                        }
+                    }
                 }
-                if (t.isJSXElement(alternate.node)) {
-                    traverseJSXContainer(alternate, componentName, references);
-                }
+
+                // 遍历条件表达式的两个分支
+                traverseExpression(consequent, references);
+                traverseExpression(alternate, references);
             },
+
+
 
             // 匹配逻辑表达式中的 JSX（如 {show && <AiMain />}）
             LogicalExpression(path) {
                 traverseJSXContainer(path.get('right'), componentName, references);
+            },
+
+            // 匹配JSX表达式容器中的组件引用（如 {condition && <AiMain />}）
+            JSXExpressionContainer(path) {
+                const expression = path.get('expression');
+                if (t.isJSXElement(expression.node) || t.isJSXFragment(expression.node)) {
+                    traverseJSXContainer(expression, componentName, references);
+                } else if (t.isLogicalExpression(expression.node) || t.isConditionalExpression(expression.node)) {
+                    traverseExpression(expression, references);
+                }
             },
 
             // 匹配数组 map 中的 JSX（如 list.map(() => <AiMain />)）

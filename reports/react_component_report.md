@@ -2,14 +2,13 @@
 
 ## 元数据
 - **文档类型**: React组件分析
-- **生成时间**: 2025-03-31 17:04:21
-- **组件总数**: 26
+- **生成时间**: 2025-03-31 17:37:39
+- **组件总数**: 25
 - **文档用途**: 组件依赖关系分析
 - **适用场景**: 代码审查、架构分析、重构规划
 
 ## 组件定义概览
 - **AiCore**: 定义于 `d:\workspace\demo\CodeScanning2\ai\aiCore.tsx`
-- **AiMain**: 定义于 `d:\workspace\demo\CodeScanning2\ai\modules\main.tsx`
 - **AiSide**: 定义于 `d:\workspace\demo\CodeScanning2\ai\side.tsx`
 - **AnswerTags**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\queryArea\tags.tsx`
 - **Card**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\card.tsx`
@@ -47,14 +46,6 @@
 - `side.tsx:50`
 **组件类型**: 核心组件
 
-### 组件: AiMain
-**组件ID**: `AiMain`
-**定义位置**: `d:\workspace\demo\CodeScanning2\ai\modules\main.tsx`
-**导入来源**: `./modules/main`
-**被引用次数**: 0
-**引用位置**: 未在其他组件中被引用
-**组件类型**: 模块组件
-
 ### 组件: AiSide
 **组件ID**: `AiSide`
 **定义位置**: `d:\workspace\demo\CodeScanning2\ai\side.tsx`
@@ -69,7 +60,7 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\queryArea\tags.tsx:20`
+- `components\queryArea\tags.tsx:20,25`
 **组件类型**: UI组件
 
 ### 组件: Card
@@ -87,13 +78,13 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 7
 **引用位置**:
-- `components\answer\card.tsx:20`
-- `components\answer\content.tsx:86`
-- `components\answer\customService.tsx:15`
-- `components\answer\feedback.tsx:103`
-- `components\answer\stopButton.tsx:7`
-- `components\answer\thinking.tsx:27`
-- `components\answer\title.tsx:61`
+- `components\answer\card.tsx:20,54`
+- `components\answer\content.tsx:116,86`
+- `components\answer\customService.tsx:15,48`
+- `components\answer\feedback.tsx:103,120`
+- `components\answer\stopButton.tsx:13,7`
+- `components\answer\thinking.tsx:27,56`
+- `components\answer\title.tsx:111,61`
 **组件类型**: UI组件
 
 ### 组件: Content
@@ -186,7 +177,7 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\queryArea\tags.tsx:27`
+- `components\queryArea\tags.tsx:27,44`
 **组件类型**: UI组件
 
 ### 组件: Outer
@@ -195,19 +186,18 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 4
 **引用位置**:
-- `index.tsx:46`
-- `index2.tsx:10`
-- `side.tsx:45`
-- `modules\history.tsx:53`
+- `index.tsx:46,69`
+- `index2.tsx:10,13`
+- `side.tsx:45,51`
+- `modules\history.tsx:105,53`
 **组件类型**: 模块组件
 
 ### 组件: QueryArea
 **组件ID**: `QueryArea`
 **定义位置**: `d:\workspace\demo\CodeScanning2\ai\components\queryArea\index.tsx`
 **导入来源**: `../../components/queryArea`
-**被引用次数**: 2
+**被引用次数**: 1
 **引用位置**:
-- `modules\main.tsx:26`
 - `modules\content\index.tsx:79`
 **组件类型**: UI组件
 
@@ -257,37 +247,35 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\svg\base.tsx:52`
+- `components\svg\base.tsx:52,55`
 **组件类型**: UI组件
 
 ### 组件: Wrapper
 **组件ID**: `Wrapper`
 **定义位置**: `d:\workspace\demo\CodeScanning2\ai\modules\leftTab\index.tsx`
 **导入来源**: 无外部导入或未检测到
-**被引用次数**: 9
+**被引用次数**: 8
 **引用位置**:
-- `aiCore.tsx:303`
-- `components\ListRenderer.tsx:104`
-- `components\queryArea\func.tsx:40`
-- `components\queryArea\index.tsx:330`
-- `components\queryArea\search.tsx:119`
-- `components\tool\index.tsx:10`
-- `modules\main.tsx:24`
-- `modules\content\index.tsx:17`
-- `modules\leftTab\index.tsx:31`
+- `aiCore.tsx:303,343`
+- `components\ListRenderer.tsx:104,168`
+- `components\queryArea\func.tsx:40,49`
+- `components\queryArea\index.tsx:330,375`
+- `components\queryArea\search.tsx:119,149`
+- `components\tool\index.tsx:16`
+- `modules\content\index.tsx:17,81`
+- `modules\leftTab\index.tsx:31,45`
 **组件类型**: 模块组件
 
 ## 组件依赖关系
 
 ### 高依赖组件 (被引用5次以上)
-- **Wrapper**: 被引用9次
+- **Wrapper**: 被引用8次
   - 在 `aiCore.tsx` 中被引用
   - 在 `components\ListRenderer.tsx` 中被引用
   - 在 `components\queryArea\func.tsx` 中被引用
   - 在 `components\queryArea\index.tsx` 中被引用
   - 在 `components\queryArea\search.tsx` 中被引用
   - 在 `components\tool\index.tsx` 中被引用
-  - 在 `modules\main.tsx` 中被引用
   - 在 `modules\content\index.tsx` 中被引用
   - 在 `modules\leftTab\index.tsx` 中被引用
 - **Container**: 被引用7次
@@ -308,9 +296,6 @@
 - **AiCore**: 被引用2次
   - 在 `index.tsx` 中被引用
   - 在 `side.tsx` 中被引用
-- **QueryArea**: 被引用2次
-  - 在 `modules\main.tsx` 中被引用
-  - 在 `modules\content\index.tsx` 中被引用
 
 ### 低依赖组件 (被引用1次)
 - **AnswerTags**: 被引用1次，在 `components\queryArea\tags.tsx` 中
@@ -320,10 +305,10 @@
 - **Icon**: 被引用1次，在 `components\svg\base.tsx` 中
 - **Image**: 被引用1次，在 `modules\leftTab\index.tsx` 中
 - **MainTags**: 被引用1次，在 `components\queryArea\tags.tsx` 中
+- **QueryArea**: 被引用1次，在 `modules\content\index.tsx` 中
 - **Wrap**: 被引用1次，在 `components\svg\base.tsx` 中
 
 ### 未被引用的组件
-- **AiMain**: 定义于 `d:\workspace\demo\CodeScanning2\ai\modules\main.tsx`
 - **AiSide**: 定义于 `d:\workspace\demo\CodeScanning2\ai\side.tsx`
 - **Content**: 定义于 `d:\workspace\demo\CodeScanning2\ai\modules\content\index.tsx`
 - **CustomService**: 定义于 `d:\workspace\demo\CodeScanning2\ai\components\answer\customService.tsx`
