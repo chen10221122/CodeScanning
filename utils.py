@@ -152,6 +152,21 @@ def find_component_definitions(content: str):
 
 
 def find_component_references(content: str, component_name: str) -> list:
+    """查找特定组件的引用
+    
+    查找文件中对指定组件的所有引用，包括：
+    - JSX标签形式的引用
+    - styled-components中的引用
+    - HOC包装中的引用
+    - React.memo和forwardRef中的引用
+    
+    Args:
+        content (str): 要分析的文件内容
+        component_name (str): 要查找的组件名称
+    
+    Returns:
+        List[str]: 组件被引用的行号列表
+    """
     # 获取 Node.js 脚本的绝对路径
     js_script_path = Path(__file__).parent / "js-ast" / "find-component-references.js"
     
