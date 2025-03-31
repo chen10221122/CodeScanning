@@ -1,7 +1,0 @@
-.stripe-table .ant-table-tbody > tr.ant-table-row:nth-of-type(odd) > td {
-  background-color: #ffffff;
-}
-
-.stripe-table .ant-table-tbody > tr.ant-table-row:nth-of-type(even) > td {
-  background-color: #f9fbff;
-}
