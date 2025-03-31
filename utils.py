@@ -68,6 +68,7 @@ def find_component_definitions(content: str):
     
     使用预定义的正则表达式模式匹配不同类型的React组件定义，
     包括类组件、函数组件、箭头函数组件、HOC包装组件等。
+    过滤掉常量数组定义如FEEDBACK_TYPE。
     
     Args:
         content (str): 要分析的文件内容
@@ -78,7 +79,10 @@ def find_component_definitions(content: str):
     components = set()
     for pattern in COMPONENT_PATTERNS:
         for match in re.finditer(pattern, content):
-            components.add(match.group(1))
+            component_name = match.group(1)
+            # 过滤掉常量数组定义
+            if not (component_name.endswith('_TYPE') or component_name.isupper()):
+                components.add(component_name)
     return components
 
 def find_component_references(content: str, component_name: str):
@@ -99,7 +103,7 @@ def find_component_references(content: str, component_name: str):
     """
     patterns = [
         # JSX组件引用
-        f'<{component_name}(?:\s+[^>]*>|\s*/?>|>)',
+        f'<{component_name}(?:\s+[^>]*>|\s*/?>|>|\s+[^>]*/>)',
         # styled-components引用
         f'const\s+[A-Z][\w]*?\s*=\s*styled(?:\({component_name}\)|\.[w]+`)',
         # HOC包装引用
