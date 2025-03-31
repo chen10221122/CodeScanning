@@ -2,7 +2,7 @@
 
 ## 元数据
 - **文档类型**: React组件分析
-- **生成时间**: 2025-03-31 15:57:14
+- **生成时间**: 2025-03-31 16:38:55
 - **组件总数**: 26
 - **文档用途**: 组件依赖关系分析
 - **适用场景**: 代码审查、架构分析、重构规划
@@ -69,7 +69,7 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\queryArea\tags.tsx:20,25`
+- `components\queryArea\tags.tsx:20`
 **组件类型**: UI组件
 
 ### 组件: Card
@@ -87,13 +87,13 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 7
 **引用位置**:
-- `components\answer\card.tsx:20,54`
-- `components\answer\content.tsx:116,86`
-- `components\answer\customService.tsx:15,48`
-- `components\answer\feedback.tsx:103,120`
-- `components\answer\stopButton.tsx:13,7`
-- `components\answer\thinking.tsx:27,56`
-- `components\answer\title.tsx:111,61`
+- `components\answer\card.tsx:20`
+- `components\answer\content.tsx:86`
+- `components\answer\customService.tsx:15`
+- `components\answer\feedback.tsx:103`
+- `components\answer\stopButton.tsx:7`
+- `components\answer\thinking.tsx:27`
+- `components\answer\title.tsx:61`
 **组件类型**: UI组件
 
 ### 组件: Content
@@ -186,7 +186,7 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\queryArea\tags.tsx:27,44`
+- `components\queryArea\tags.tsx:27`
 **组件类型**: UI组件
 
 ### 组件: Outer
@@ -195,10 +195,10 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 4
 **引用位置**:
-- `index.tsx:46,69`
-- `index2.tsx:10,13`
-- `side.tsx:45,51`
-- `modules\history.tsx:105,53`
+- `index.tsx:46`
+- `index2.tsx:10`
+- `side.tsx:45`
+- `modules\history.tsx:53`
 **组件类型**: 模块组件
 
 ### 组件: QueryArea
@@ -257,7 +257,7 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 1
 **引用位置**:
-- `components\svg\base.tsx:52,55`
+- `components\svg\base.tsx:52`
 **组件类型**: UI组件
 
 ### 组件: Wrapper
@@ -266,15 +266,15 @@
 **导入来源**: 无外部导入或未检测到
 **被引用次数**: 9
 **引用位置**:
-- `aiCore.tsx:303,343`
-- `components\ListRenderer.tsx:104,168`
-- `components\queryArea\func.tsx:40,49`
-- `components\queryArea\index.tsx:330,375`
-- `components\queryArea\search.tsx:119,149`
-- `components\tool\index.tsx:10,16`
-- `modules\main.tsx:24,34`
-- `modules\content\index.tsx:17,81`
-- `modules\leftTab\index.tsx:31,45`
+- `aiCore.tsx:303`
+- `components\ListRenderer.tsx:104`
+- `components\queryArea\func.tsx:40`
+- `components\queryArea\index.tsx:330`
+- `components\queryArea\search.tsx:119`
+- `components\tool\index.tsx:10`
+- `modules\main.tsx:24`
+- `modules\content\index.tsx:17`
+- `modules\leftTab\index.tsx:31`
 **组件类型**: 模块组件
 
 ## 组件依赖关系
