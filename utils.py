@@ -101,19 +101,16 @@ def find_component_references(content: str, component_name: str):
     Returns:
         List[str]: 组件被引用的行号列表
     """
+    escaped_name = re.escape(component_name)  # 转义特殊字符（如 . $ 等）
     patterns = [
-        # 1️⃣ **匹配 JSX 组件完整写法**（支持多行属性）
-        # ✅ `<AiMain prop1="xx" prop2={xx}> ... </AiMain>`
-        rf'<{component_name}[^>]*?>[\s\S]*?</{component_name}>',
-
-        # 2️⃣ **匹配 JSX 自闭合组件**（即无 children）
-        # ✅ `<AiMain prop1="xx" prop2={xx} />`
-        rf'<{component_name}[^/>]*/>',
-
-        # 3️⃣ **支持 JSX 组件在三元运算符中的情况**
-        # ✅ `condition ? <AiMain prop1="xx" /> : <OtherComponent />`
-        rf'[(]?\s*<{component_name}[^>]*?>[\s\S]*?</{component_name}>',
-        rf'[(]?\s*<{component_name}[^/>]*/>',
+        # 匹配完整 JSX 标签（支持任意多行属性）
+        rf'<{escaped_name}\b(\s+[^>]*?|\s*?)>.*?</{escaped_name}\s*>',
+        
+        # 匹配自闭合 JSX 标签（支持任意多行属性）
+        rf'<{escaped_name}\b[\s\S]*?\/\s*>',
+        
+        # 精准匹配三元运算符中的组件（如 : <AiMain ... />）
+        rf':\s*<{escaped_name}\b[\s\S]*?<\/{escaped_name}\s*>|\/{escaped_name}\s*>',
 
         # 4️⃣ **styled-components 样式组件**
         # ✅ `const StyledAiMain = styled(AiMain)`
@@ -142,4 +139,10 @@ def find_component_references(content: str, component_name: str):
     for pattern in patterns:
         references.extend(re.finditer(pattern, content, re.DOTALL))
 
-    return [str(content[:m.start()].count('\n') + 1) for m in references]
+    line_numbers = set()
+    for m in references:
+        start = m.start()
+        line_number = content[:start].count('\n') + 1
+        line_numbers.add(line_number)
+
+    return sorted(map(str, line_numbers))
