@@ -11,7 +11,7 @@ from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from file_scanner import FileScanner
 from component_analyzer import ComponentAnalyzer
-from report_generator import ReportGenerator
+from optimized_report_generator import ReportGenerator
 
 class ReactScanner:
     """React组件扫描器

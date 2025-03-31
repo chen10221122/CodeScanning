@@ -8,8 +8,8 @@ python react_scanner.py "d:\workspace\demo\CodeScanning2\ai"
 python react_scanner.py "d:\workspace\demo\CodeScanning2\area"
 
 # 生成 markdown
-python react_scanner.py "d:\workspace\demo\CodeScanning2\ai" --markdown
 python react_scanner.py d:\workspace\demo\CodeScanning2\ai --markdown reports/react_component_report.md
+python react_scanner.py d:\workspace\demo\CodeScanning2\ai --markdown d:\workspace\demo\CodeScanning2\reports\react_component_report.md
 
 
 ```
