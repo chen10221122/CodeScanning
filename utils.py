@@ -102,10 +102,14 @@ def find_component_references(content: str, component_name: str):
         List[str]: 组件被引用的行号列表
     """
     patterns = [
-        # JSX组件引用
+        # JSX组件引用 - 增强版，支持更多JSX标签形式和属性模式
         f'<{component_name}(?:\s+[^>]*>|\s*/?>|>|\s+[^>]*/>)',
-        # styled-components引用
-        f'const\s+[A-Z][\w]*?\s*=\s*styled(?:\({component_name}\)|\.[w]+`)',
+        # 组件作为React元素使用 - 新增模式，捕获如 <AiMain prop={value} /> 形式
+        f'<{component_name}\s+(?:[^/>]*?)(?:/>|>)',
+        # 组件作为变量使用 - 新增模式，捕获如 {isCondition && <AiMain />} 形式
+        f'(?:&&|\?|\:|\(|\[|,|=|\s+)<{component_name}(?:\s+[^>]*>|\s*/?>|>|\s+[^>]*/>)',
+        # styled-components引用 - 修复正则表达式中的错误
+        f'const\s+[A-Z][\w]*?\s*=\s*styled(?:\({component_name}\)|\.[\w]+`)',
         # HOC包装引用
         f'(?:connect|withRouter|withStyles|withTheme|with[A-Z][\w]*)\({component_name}\)',
         # React.memo引用
