@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="65px" height="39px" viewBox="0 0 65 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>编组 51</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="81.3116776%" y1="31.5255511%" x2="0%" y2="61.6890091%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#CBE5FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="5024新增境外专题" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4-0.债券违约-违约大全-违约主体" transform="translate(-1193.000000, -161.000000)">
+            <g id="编组-6" transform="translate(60.000000, 149.000000)">
+                <g id="编组-49" transform="translate(24.000000, 12.000000)">
+                    <g id="路径-6">
+                        <g id="编组-51" transform="translate(1096.071143, -48.604384)">
+                            <ellipse id="椭圆形" fill="url(#linearGradient-1)" cx="75.4288568" cy="68.1817038" rx="19" ry="17.8247423"></ellipse>
+                            <ellipse id="椭圆形" fill-opacity="0.245164991" fill="#E3F1FF" transform="translate(46.928857, 47.002216) rotate(134.000000) translate(-46.928857, -47.002216) " cx="46.9288568" cy="47.0022157" rx="32.9288568" ry="33.0022157"></ellipse>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

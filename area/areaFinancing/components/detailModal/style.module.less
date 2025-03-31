@@ -1,0 +1,92 @@
+.modalWrapper {
+  :global {
+    overflow-y: scroll;
+    .ant-table-column-sorters {
+      justify-content: center !important;
+      .ant-table-column-title {
+        flex: none !important;
+      }
+      .ant-table-column-sorter {
+        margin-left: 4px;
+      }
+    }
+    .ant-modal-header {
+      padding-bottom: 8px !important;
+    }
+    .ant-modal-content {
+      height: 100% !important;
+    }
+    .ant-table-thead th.ant-table-column-has-sorters:hover {
+      background: #f8faff;
+    }
+    // loading距顶部
+    .ant-spin-nested-loading > div > .ant-spin .ant-spin-text {
+      top: 37% !important;
+    }
+    .ant-spin-nested-loading > div > .ant-spin .ant-spin-dot {
+      top: 37% !important;
+    }
+    .ant-modal-body {
+      overflow: hidden !important;
+    }
+    .ant-spin-container {
+      height: 100%;
+    }
+    .ant-modal {
+      height: calc(100% - 60px);
+      top: 60px;
+      min-height: 320px;
+      padding-bottom: 27px;
+    }
+  }
+  .modalTitle {
+    .filterWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 18px;
+      line-height: 18px;
+      margin-top: 12px;
+      .left {
+        display: flex;
+      }
+      &.noScreen {
+        position: absolute;
+        top: 17px;
+        right: 34px;
+      }
+    }
+    .title {
+      height: 27px;
+      font-size: 18px;
+      color: #141414;
+      font-weight: 500;
+      line-height: 27px;
+    }
+    .right-title {
+      display: flex;
+      align-items: center;
+      .right-title-content {
+        font-size: 12px;
+        color: #666666;
+        line-height: 18px;
+        margin-right: 24px;
+        font-weight: 400;
+        .right-title-content-count {
+          color: #ff7500;
+          margin: 0 2px;
+        }
+      }
+    }
+  }
+}
+.emptyWrapper {
+  min-height: 40px;
+  height: calc(30% - 90px);
+}
+.remark {
+  font-size: 12px;
+  font-weight: 400;
+  color: #8c8c8c;
+  line-height: 20px;
+}

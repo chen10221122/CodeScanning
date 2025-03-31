@@ -1,0 +1,134 @@
+.modalWrapper {
+  :global {
+    .ant-modal-close {
+      z-index: 11;
+    }
+    .ant-modal-body {
+      height: 100%;
+      overflow-y: overlay !important;
+    }
+    .ant-modal-content {
+      width: 1000px !important;
+    }
+  }
+}
+.link {
+  cursor: pointer;
+  color: #025cdc;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.wrapper {
+  .stickyWrapper {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    background: #ffff;
+    padding-top: 24px;
+  }
+  padding: 0 32px 16px 32px;
+  .wrapTitle {
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+    color: #141414;
+    span {
+      cursor: pointer;
+      margin-left: 8px;
+    }
+  }
+  .briefInfo {
+    display: flex;
+    margin-top: 15px;
+    padding-bottom: 8px;
+    dl {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      dt {
+        width: 52px;
+        height: 18px;
+        font-size: 13px;
+        font-weight: 400;
+        text-align: left;
+        color: #666666;
+        line-height: 18px;
+        margin-right: 8px;
+      }
+      dd {
+        width: 185px;
+        height: 18px;
+        font-size: 13px;
+        font-weight: 400;
+        text-align: left;
+        color: #111111;
+        line-height: 18px;
+        margin-bottom: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 24px;
+        &:last-of-type {
+          width: 90px;
+          margin-right: 0;
+        }
+      }
+    }
+    .tableInfo {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      .count {
+        color: #333;
+        font-size: 12px;
+        position: relative;
+        top: 1px;
+        span {
+          color: #ff7500;
+        }
+      }
+      .exportArea {
+        margin-left: 24px;
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+  .rankWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .spinningWrapper {
+    :global {
+      .ant-spin.ant-spin-spinning.ant-spin-show-text {
+        top: 110px;
+      }
+    }
+  }
+  .rankIcon {
+    background: url('../../images/tie.svg') no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+  .top1 {
+    background: url('../../images/gold.svg') no-repeat;
+    background-size: contain;
+  }
+  .top2 {
+    background: url('../../images/silver.svg') no-repeat;
+    background-size: contain;
+  }
+  .top3 {
+    background: url('../../images/tong.svg') no-repeat;
+    background-size: contain;
+  }
+  .rankText {
+    color: #141414;
+  }
+}

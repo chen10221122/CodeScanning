@@ -1,0 +1,63 @@
+.lessee-popover-content {
+  z-index: 990 !important;
+
+  ::-webkit-scrollbar {
+    width: 6px !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: #cfcfcf;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b0b0b0;
+  }
+
+  .ant-popover-inner {
+    padding: 12px 4px 12px 0 !important;
+
+    .ant-popover-inner-content {
+      padding: 0 12px 0 16px !important;
+      max-width: 572px;
+      max-height: 182px;
+      overflow-y: auto;
+
+      .popover-text {
+        display: inline-block;
+        color: #141414;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .line {
+    // display: flex;
+    // align-items: flex-start;
+    margin-bottom: 6px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .word {
+      margin-right: 6px;
+      margin-top: 2px;
+
+      &.no-hover {
+        cursor: default;
+      }
+
+      // display: inline-block;
+      line-height: 20px;
+      white-space: wrap;
+      cursor: pointer;
+      font-size: 13px;
+
+      // transform: translateY(2px);
+      &:not(.no-hover):hover {
+        color: #025cdc;
+      }
+    }
+  }
+}

@@ -1,0 +1,340 @@
+.wrapper {
+  min-height: calc(100% - 48px);
+  padding: 12px 20px 16px;
+  background-color: #fff;
+  &.hasStickyTop {
+    padding-top: 0;
+    &::before {
+      content: '';
+      display: block;
+      height: 12px;
+      width: calc(100% + 10px);
+      margin-left: -10px;
+      position: sticky;
+      top: 0;
+      z-index: 6;
+      background-color: #fff;
+    }
+  }
+  .stickyArea {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 6;
+  }
+  .title {
+    height: 23px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #141414;
+    line-height: 23px;
+    position: relative;
+    &::before {
+      position: absolute;
+      left: -9px;
+      top: 4px;
+      width: 3px;
+      height: 14px;
+      background: #ff9347;
+      border-radius: 2px;
+      content: '';
+    }
+  }
+  .filter {
+    padding-top: 4px;
+  }
+  .filterOverFlow {
+    line-height: 28px;
+    min-height: 28px;
+    padding-top: 4px;
+    height: unset;
+  }
+  .stickyDom {
+    height: 8px;
+  }
+  .content {
+    .emptyWrapper {
+      min-height: 60px;
+      /** 空白区域高度为100vh - 180px */
+      height: calc(30vh - 60px - 106px);
+    }
+    .empty {
+      margin-top: 62px;
+    }
+  }
+
+  // 租赁融资将到期事件-特殊样式
+  .lessee-wrap,
+  .leaser-wrap {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    .word {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .wrap {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      .arrow {
+        cursor: pointer;
+        display: inline-block;
+        margin-left: 4px;
+        > svg {
+          transition: all 0.3s;
+        }
+        &.ant-popover-open {
+          > svg {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+  }
+}
+
+.specialWrapper {
+  min-height: calc(100% - 48px);
+  padding: 12px 20px 16px;
+  background-color: #fff;
+  &.hasStickyTop {
+    padding-top: 0;
+    &::before {
+      content: '';
+      display: block;
+      height: 10px;
+      width: calc(100% + 10px);
+      margin-left: -10px;
+      position: sticky;
+      top: 0;
+      z-index: 6;
+      background-color: #fff;
+    }
+  }
+  .stickyArea {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 6;
+  }
+  .title {
+    height: 23px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #141414;
+    line-height: 23px;
+    position: relative;
+    &::before {
+      position: absolute;
+      left: -9px;
+      top: 4px;
+      width: 3px;
+      height: 14px;
+      background: #ff9347;
+      border-radius: 2px;
+      content: '';
+    }
+  }
+  .filter {
+    padding-top: 4px;
+  }
+  .filterOverFlow {
+    line-height: 28px;
+    min-height: 46px;
+    padding-top: 4px;
+    height: unset;
+  }
+  .stickyDom {
+    height: 8px;
+  }
+  .content {
+    .emptyWrapper {
+      min-height: 60px;
+      /** 空白区域高度为100vh - 180px */
+      height: calc(30vh - 60px - 106px);
+    }
+    .empty {
+      margin-top: 62px;
+    }
+  }
+
+  // 租赁融资将到期事件-特殊样式
+  .lessee-wrap,
+  .leaser-wrap {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    .word {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .wrap {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      .arrow {
+        cursor: pointer;
+        display: inline-block;
+        margin-left: 4px;
+        > svg {
+          transition: all 0.3s;
+        }
+        &.ant-popover-open {
+          > svg {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+  }
+}
+
+.normalWrapper {
+  min-height: calc(100% - 48px);
+  padding: 12px 20px 16px;
+  background-color: #fff;
+  &.hasStickyTop {
+    padding-top: 0;
+    &::before {
+      content: '';
+      display: block;
+      height: 8px;
+      width: calc(100% + 10px);
+      margin-left: -10px;
+      position: sticky;
+      top: 0;
+      z-index: 6;
+      background-color: #fff;
+    }
+  }
+  .stickyArea {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 6;
+  }
+  .title {
+    height: 23px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #141414;
+    line-height: 23px;
+    position: relative;
+    &::before {
+      position: absolute;
+      left: -9px;
+      top: 4px;
+      width: 3px;
+      height: 14px;
+      background: #ff9347;
+      border-radius: 2px;
+      content: '';
+    }
+  }
+  .filter {
+    padding-top: 4px;
+  }
+  .filterOverFlow {
+    line-height: 28px;
+    min-height: 46px;
+    padding-top: 4px;
+    height: unset;
+  }
+  .stickyDom {
+    height: 8px;
+  }
+  .content {
+    .emptyWrapper {
+      min-height: 60px;
+      /** 空白区域高度为100vh - 180px */
+      height: calc(30vh - 60px - 106px);
+    }
+    .empty {
+      margin-top: 62px;
+    }
+  }
+
+  // 租赁融资将到期事件-特殊样式
+  .lessee-wrap,
+  .leaser-wrap {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    .word {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .wrap {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      .arrow {
+        cursor: pointer;
+        display: inline-block;
+        margin-left: 4px;
+        > svg {
+          transition: all 0.3s;
+        }
+        &.ant-popover-open {
+          > svg {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+  }
+}
+
+.subWrapper {
+  &:first-child {
+    margin-top: 4px;
+  }
+  margin-bottom: 24px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &:nth-of-type(2) {
+    .subStickyArea {
+      z-index: 7;
+    }
+  }
+  &:nth-of-type(3) {
+    .subStickyArea {
+      z-index: 6;
+    }
+  }
+  &:nth-of-type(4) {
+    .subStickyArea {
+      z-index: 5;
+    }
+  }
+  .subStickyArea {
+    position: sticky;
+    top: 11px;
+    background-color: #fff;
+    z-index: 7;
+    border-top: 1px solid #fff;
+  }
+  .subTitle {
+    height: 20px;
+    font-size: 13px;
+    color: #3c3c3c;
+    line-height: 20px;
+    .subTitleIcon {
+      vertical-align: -2px;
+      margin-right: 8px;
+    }
+  }
+  .subFilter {
+    padding-top: 8px;
+    height: 28px;
+    position: sticky;
+  }
+  .subStickyDom {
+    height: 12px;
+  }
+}

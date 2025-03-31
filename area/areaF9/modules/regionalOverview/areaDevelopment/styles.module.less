@@ -1,0 +1,85 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 900px;
+  position: relative;
+  z-index: 9;
+  height: 100%;
+  // scrollbar-gutter: stable;
+  background: #fff;
+}
+
+.areaDevelopment {
+  position: relative;
+  // @media (min-width: 1366px) {
+  //   padding: 0 48px;
+  // }
+  background-color: #fafbfd;
+}
+
+.stickyWrap {
+  display: flex;
+  // padding: 0 10px 0 24px;
+  // height: 28px;
+  background-color: #ffffff;
+}
+
+.tableWrap {
+  // padding: 0 10px 20px 20px;
+  min-height: calc(100vh - 245px);
+  background-color: #ffffff;
+  min-height: calc(100vh - 245px);
+  background-color: #fff;
+  @media (max-width: 1279px) {
+    min-height: calc(100vh - 257px);
+  }
+}
+
+.filterContent {
+  width: 100%;
+  margin: 0 auto;
+  flex: none;
+  .selected-wrap {
+    padding-left: 30px;
+  }
+}
+
+.mainWrapper {
+  height: 100%;
+  position: relative;
+  min-height: calc(100vh - 245px);
+  background-color: #fff;
+  @media (max-width: 1279px) {
+    min-height: calc(100vh - 257px);
+  }
+  :global(.ant-spin-container) {
+    height: 100%;
+    overflow: visible !important;
+  }
+  :global(.ant-empty) {
+    // position: fixed;
+    width: 100%;
+    height: calc(100% - 152px);
+    padding-top: 80px;
+    background-color: #ffffff;
+    @media (min-width: 1366px) {
+      width: calc(100% - 150px);
+      margin-left: 48px !important;
+    }
+  }
+}
+
+.filterStickyWrap {
+  // @media (min-width: 1366px) {
+  //   padding: 0 48px;
+  // }
+  // height: 30px;
+  background-color: #fff;
+  position: sticky; //设置帮助中心弹框出来消失
+  top: 40px;
+  margin-top: -4px;
+  padding-bottom: 3px;
+  z-index: 9;
+  // top: 0;
+  // z-index: 9;
+}

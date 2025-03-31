@@ -1,0 +1,54 @@
+.screenLine {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20px;
+
+  .screenAndSearch {
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .screen {
+      width: 322px;
+      height: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .three-screen {
+      width: 242px;
+    }
+
+    :global {
+      .is-small {
+        .ant-input-affix-wrapper-sm {
+          padding: 0 0 0 7px;
+          .ant-input-suffix {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .exportAndCount {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .counter {
+      font-size: 13px;
+      font-weight: 400;
+      color: #333333;
+      line-height: 20px;
+      margin-right: 24px;
+      .countNumber {
+        color: #ff9347;
+      }
+    }
+  }
+}

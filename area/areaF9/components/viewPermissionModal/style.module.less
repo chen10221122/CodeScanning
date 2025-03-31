@@ -1,0 +1,39 @@
+.modalWrapCls {
+  min-width: unset !important;
+  position: absolute;
+  overflow: unset;
+  &.vipModal {
+    :global {
+      .ant-modal {
+        top: ~'max((100% - 360px) * 0.3, 60px)';
+        min-height: calc(360px + 60px) !important;
+      }
+      .dzh-pro-modal-limit-body-content {
+        width: 376px;
+      }
+    }
+  }
+  :global {
+    .ant-modal {
+      top: ~'max((100% - 460px) * 0.3, 60px)';
+      min-height: calc(460px + 60px) !important;
+      padding-bottom: 60px;
+    }
+  }
+}
+
+.container {
+  flex: auto;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  &:has(.vipModal) .blurWrap {
+    min-height: 480px;
+  }
+  .blurWrap {
+    height: inherit;
+    min-height: 580px;
+    filter: blur(1px);
+    background: url('./bg_blur.png') no-repeat top left / contain;
+  }
+}

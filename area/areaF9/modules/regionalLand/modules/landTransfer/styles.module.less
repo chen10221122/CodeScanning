@@ -1,0 +1,52 @@
+.social-finance-module-loading {
+  :global {
+    .ant-spin-nested-loading {
+      .ant-spin-blur {
+        opacity: 0.1;
+      }
+    }
+  }
+}
+
+.social-finance-chart-wrapper {
+  height: 247px;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.social-finance-table-wrapper {
+  margin-bottom: 12px;
+  .table-quota-title {
+    color: #ff7500;
+  }
+  :global {
+    /* 去除表格阴影 */
+    .ant-table-ping-right:not(.ant-table-has-fix-right) .ant-table-container::after {
+      box-shadow: none;
+    }
+    // 表格loading错位修复
+    .dzh-table-body-loading.ant-spin-nested-loading > div > .ant-spin {
+      position: absolute !important;
+    }
+    .dzh-table-pagination {
+      margin-top: 6px;
+      margin-bottom: 0px;
+    }
+  }
+}
+// 表格飘蓝出弹窗
+.cancelOrPutoffIssuance-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #025cdc;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.normal-table-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

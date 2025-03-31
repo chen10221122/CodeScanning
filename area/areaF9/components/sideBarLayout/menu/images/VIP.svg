@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>VIP</title>
+    <defs>
+        <linearGradient x1="60.2245691%" y1="-40.2243512%" x2="34.7575823%" y2="87.5555555%" id="linearGradient-1">
+            <stop stop-color="#FFEAAB" offset="0%"></stop>
+            <stop stop-color="#DC9635" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="设计稿最终版" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01目录树样式" transform="translate(-124.000000, -579.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="目录树" transform="translate(0.000000, 102.000000)">
+                <g id="企业融资" transform="translate(10.000000, 342.000000)">
+                    <g id="编组-7" transform="translate(46.000000, 132.000000)">
+                        <g id="vip-2" transform="translate(68.000000, 3.000000)">
+                            <polygon id="路径" points="1 1.68 1 2.38666665 1.70666667 2.38666665 3.12 10.8666667 5.94666666 10.8666667 11.6 1.68 8.06666666 1.68 8.06666666 2.38666665 5.23999999 8.03999999 4.53333332 1.68"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

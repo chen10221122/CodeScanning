@@ -1,0 +1,21 @@
+.filterWrapper {
+  display: flex;
+  height: 36px;
+  line-height: 20px;
+  align-items: center;
+  .screen-wrapper {
+    .ant-dropdown-trigger {
+      padding-bottom: 0 !important;
+    }
+  }
+
+  :global {
+    #templateFilterScreen {
+      .screen-wrapper {
+        .ant-dropdown-trigger {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

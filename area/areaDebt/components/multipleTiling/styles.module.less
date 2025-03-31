@@ -1,0 +1,97 @@
+.dropdownWrapper {
+  max-width: 800px;
+}
+
+.wrapper {
+  max-height: 325px;
+  min-height: 197px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background-color: #ddd;
+    }
+  }
+}
+
+.lineWrapper {
+  display: flex;
+  font-size: 13px;
+  line-height: 1em;
+  margin-bottom: 8px;
+  margin-left: 16px;
+  margin-right: 16px;
+
+  .title {
+    flex: none;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    color: #262626;
+    font-weight: 500;
+    vertical-align: top;
+    width: 80px;
+    margin-right: 16px;
+    user-select: none;
+    line-height: 18px;
+  }
+
+  .lineList {
+    flex: auto;
+    margin-bottom: 0;
+    margin-top: 2px;
+    color: #141414;
+    font-size: 13px;
+
+    & > li {
+      display: inline-block;
+      padding: 4px 6px;
+      margin-bottom: 2px;
+      user-select: none;
+      transition: all 0.3s;
+
+      &:not(:last-child) {
+        margin-right: 8px;
+      }
+
+      &:hover {
+        background-color: rgba(1, 113, 246, 0.08);
+        color: #0171f6;
+        cursor: pointer;
+      }
+
+      &.active {
+        background-color: rgba(1, 113, 246, 0.08);
+        color: #0171f6;
+      }
+
+      &.disabled {
+        color: #c9c9c9;
+        cursor: not-allowed;
+
+        &:hover {
+          background-color: #fff;
+        }
+      }
+
+      .lineText {
+        margin-bottom: 0;
+        display: inline-block;
+        max-width: 208px;
+        color: currentColor;
+      }
+    }
+  }
+}
+
+.iconClose {
+  font-size: 12px;
+  margin-left: 2px;
+}

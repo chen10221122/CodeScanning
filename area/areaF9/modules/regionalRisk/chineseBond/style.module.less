@@ -1,0 +1,142 @@
+.risk-chinese-page-wrapper {
+  height: 100%;
+  position: relative;
+  overflow-y: overlay;
+  background-color: #fff;
+  :global {
+    .ant-tabs-top {
+      padding: 0 20px;
+      position: relative;
+      overflow: visible;
+      min-height: calc(100% - 48px);
+      .ant-tabs-nav {
+        border-radius: 6px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: #fff;
+        padding-top: 10px;
+        margin: 0;
+        &:before {
+          z-index: 10;
+          border-bottom: 1px solid rgba(1, 113, 246, 0.2);
+        }
+        .ant-tabs-ink-bar {
+          visibility: hidden;
+        }
+        .ant-tabs-nav-wrap {
+          .ant-tabs-tab {
+            background: #f5f6f9;
+            border-radius: 2px 2px 0px 0px;
+            border: none !important;
+            padding: 4px 16px 5px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #262626;
+            line-height: 21px;
+            .ant-tabs-tab-btn {
+              transition: none;
+            }
+          }
+          .ant-tabs-tab + .ant-tabs-tab {
+            margin-left: 2px;
+          }
+          .ant-tabs-tab.ant-tabs-tab-active {
+            background: #0171f6;
+            .ant-tabs-tab-btn {
+              color: #ffffff;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+    .ant-tabs-content {
+      .content-wrapper {
+        padding-bottom: 16px;
+        .ant-table-thead {
+          > tr {
+            > th {
+              color: #262626;
+              font-size: 13px;
+              padding: 6px 12px !important;
+              box-sizing: border-box;
+              font-weight: 400 !important;
+              text-align: center !important;
+
+              // antd 排序的一些样式
+              .ant-table-column-sorters {
+                margin-top: 0 !important;
+                align-items: center;
+                padding: 0;
+                // 可控制表头的 align 根据需要改
+                justify-content: center;
+                .ant-table-column-sorter-full {
+                  position: relative;
+                  top: 1px;
+                  margin-top: 0;
+                  margin-left: 4px;
+                }
+                .ant-table-column-title {
+                  flex: initial;
+                  text-align: right;
+                  width: fit-content;
+                }
+              }
+              .copy-icon {
+                vertical-align: -3px !important;
+              }
+            }
+            > th.pdd-8 {
+              padding: 6px 8px !important;
+            }
+          }
+        }
+        .ant-table-tbody {
+          tr > td.ant-table-cell {
+            padding: 6px 12px !important;
+          }
+          tr > td.pdd-8 {
+            padding: 6px 8px !important;
+          }
+        }
+        .mount-table-loading {
+          .ant-spin-container {
+            opacity: 1;
+            overflow: visible !important;
+            transition: none;
+            &:after {
+              top: 42px;
+              opacity: 0.85;
+              transition: none;
+              z-index: 2 !important;
+              height: calc(100% - 42px) !important;
+            }
+          }
+          .ant-spin-spinning {
+            transition: none;
+            .loading-tips {
+              width: 88px;
+              height: 88px;
+              background: #fff;
+              border-radius: 8px;
+              box-shadow: 0 4px 22px 6px rgba(44, 44, 48, 0.07);
+              margin-left: -44px;
+              opacity: 1;
+              margin-top: -44px;
+              z-index: 1;
+
+              .loading-text {
+                font-size: 13px;
+                color: #434343;
+                line-height: 20px;
+                margin-top: 6px;
+                display: block;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

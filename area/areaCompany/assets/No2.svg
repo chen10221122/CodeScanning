@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="20px" viewBox="0 0 16 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 25</title>
+    <defs>
+        <path d="M2,0 L14,0 C15.1045695,-2.02906125e-16 16,0.8954305 16,2 L16,18.115186 C16,18.6674707 15.5522847,19.115186 15,19.115186 C14.8125803,19.115186 14.6289327,19.0625165 14.4700011,18.9631843 L8.52999894,15.2506829 C8.20572866,15.048014 7.79427134,15.048014 7.47000106,15.2506829 L1.52999894,18.9631843 C1.06166241,19.2558946 0.444712028,19.1135214 0.152001696,18.6451849 C0.0526694449,18.4862533 -1.42033764e-15,18.3026057 0,18.115186 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 Z" id="path-1"></path>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="05企业偿债压力" transform="translate(-252.000000, -267.000000)">
+            <g id="编组-13" transform="translate(234.000000, 171.013861)">
+                <g id="编组-25" transform="translate(18.000000, 95.986139)">
+                    <g id="编组-24">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="矩形" fill="#FFBB02" xlink:href="#path-1"></use>
+                        <polygon id="路径-3" fill="#FFDC7E" mask="url(#mask-2)" points="7.21158725 15.5556641 17.3513578 9.49902344 17.3513578 22.8442383"></polygon>
+                    </g>
+                    <text id="2" font-family="Arial-BoldMT, Arial" font-size="10" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="5" y="11">2</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,114 @@
+.loadingTips {
+  position: absolute;
+  top: 0 !important;
+  width: 88px;
+  height: 88px;
+  margin: 0 !important;
+  .loadingText {
+    font-size: 13px;
+    position: relative;
+    width: 100px;
+    text-align: center;
+    left: -30px;
+    color: #434343;
+    top: 26px;
+  }
+}
+.tableLoadingWrapper {
+  /* 调整遮罩层, 保留表头 */
+  .ant-spin-container {
+    opacity: 1;
+    &:after {
+      opacity: 0.85;
+      z-index: 3;
+      transition: opacity 0.3s;
+    }
+    &.ant-spin-blur {
+      overflow: visible;
+    } 
+  }
+  :global {
+    .ant-spin-spinning {
+      z-index: 4;
+      position: fixed;
+      top: 25%;
+    }
+    .ant-spin-blur {
+      overflow: visible !important;
+    }
+  }
+  &.isSortOrPage {
+    position: relative;
+    :global {
+      .ant-spin-container {
+        opacity: 1;
+        overflow: visible !important;
+        &:after {
+          top: 33px;
+          opacity: 0.9;
+          transition: none;
+          z-index: 2 !important;
+          height: calc(100% + 30px);
+        }
+      }
+      .ant-spin-spinning {
+        position: absolute;
+        top: 88px !important;
+      }
+      .ant-spin-blur {
+        overflow: visible !important;
+      }
+    }
+  }
+}
+.tableStyleWrapper {
+  :global {
+    .ant-table-thead > tr > th  {
+      padding: 6px 8px;
+    }
+    .ant-table-thead > tr {
+      .textLeft {
+        text-align: left !important;
+      }
+    } 
+    .ant-table-thead > tr > th:first-child,
+    .ant-table-tbody > tr > td:first-child {
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+    }
+    ul.ant-pagination {
+      display: none;
+    }
+    .ant-table-thead th.ant-table-column-has-sorters:hover {
+      background-color: #f8faff;
+    }
+    .ant-table-ping-left:not(.ant-table-has-fix-left) .ant-table-container::before {
+      box-shadow: none !important;
+    }
+    .ant-table-ping-right:not(.ant-table-has-fix-right) .ant-table-container::after {
+      box-shadow: none !important;
+    }
+
+    .ant-table-column-sorters {
+      justify-content: center !important;
+      .ant-table-column-title {
+        flex: none !important;
+        max-width: calc(100% - 12px);
+        > div {
+          white-space: break-spaces;
+        }
+      }
+      .ant-table-column-sorter {
+        margin-left: 4px;
+      }
+    }
+  }
+  &.isLoading {
+    :global {
+      .ant-table-header.ant-table-sticky-holder {
+        top: 0 !important;
+      }
+    }
+  }
+}
+

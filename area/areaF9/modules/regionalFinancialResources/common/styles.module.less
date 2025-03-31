@@ -1,0 +1,115 @@
+.loadingTips {
+  position: absolute;
+  top: 0 !important;
+  width: 88px;
+  height: 88px;
+  margin: 0 !important;
+  .loadingText {
+    font-size: 13px;
+    position: relative;
+    width: 100px;
+    text-align: center;
+    left: -30px;
+    color: #434343;
+    top: 26px;
+  }
+}
+.tableLoadingWrapper {
+  /* 调整遮罩层, 保留表头 */
+  .ant-spin-container {
+    opacity: 1;
+    &:after {
+      opacity: 0.85;
+      z-index: 3;
+      transition: opacity 0.3s;
+    }
+    &.ant-spin-blur {
+      overflow: visible;
+    } 
+  }
+  :global {
+    .ant-spin-spinning {
+      z-index: 4;
+      position: fixed;
+      top: 25%;
+    }
+    .ant-spin-blur {
+      overflow: visible !important;
+    }
+  }
+  &.isSortOrPage {
+    position: relative;
+    :global {
+      .ant-spin-container {
+        opacity: 1;
+        overflow: visible !important;
+        &:after {
+          top: 33px;
+          opacity: 0.9;
+          transition: none;
+          z-index: 2 !important;
+          height: calc(100% + 30px);
+        }
+      }
+      .ant-spin-spinning {
+        position: absolute;
+        top: 88px !important;
+      }
+      .ant-spin-blur {
+        overflow: visible !important;
+      }
+    }
+  }
+}
+.tableCss {
+  :global {
+    .resizableCol {
+      white-space: unset !important;
+    }
+    .ant-table-column-sorters {
+      text-align: center !important;
+      // 解决拖拽表格在loading时 表头内容抖动的现象
+      display: flex;
+      justify-content: center;
+      height: 20px !important;
+    }
+    .ant-table-column-title {
+      // 解决拖拽表格在loading时 表头内容抖动的现象
+      // flex: none !important; 
+      flex: initial;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      min-width: unset;
+    }
+    .ant-table-column-sorter {
+      margin-left: 4px;
+    }
+    .title-center {
+      text-align: center;
+    }
+
+    .ant-table-cell-fix-left-last {
+      border-right-color: #e8ecf4 !important;
+    }
+  }
+}
+.modalTable {
+  :global {
+    .ant-table-column-sorters {
+      justify-content: center;
+      .ant-table-column-title {
+        flex: initial;
+      }
+      .ant-table-column-sorter {
+        margin-left: 4px;
+      }
+    }
+    .ant-table-thead {
+      .ant-table-cell {
+        text-align: center;
+      }
+    }
+   
+  }
+}

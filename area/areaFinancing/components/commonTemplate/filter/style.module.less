@@ -1,0 +1,28 @@
+.filterWrapper {
+  display: flex;
+  height: 40px;
+  line-height: 40px;
+  align-items: center;
+  .extra {
+    display: flex;
+    margin-left: -24px;
+    .item {
+      margin-left: 24px;
+      font-size: 13px;
+      .checkboxWrapper {
+        font-size: 12px;
+        :global {
+          .ant-checkbox-inner {
+            transform: scale(0.75);
+          }
+          .ant-checkbox-checked::after {
+            border: none;
+          }
+          .ant-checkbox + span {
+            padding-left: 5px;
+          }
+        }
+      }
+    }
+  }
+}

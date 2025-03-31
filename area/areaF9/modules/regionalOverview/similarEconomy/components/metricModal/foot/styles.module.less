@@ -1,0 +1,50 @@
+.overlayFoot {
+  height: 12px;
+  // border-top: 1px solid #efefef;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #3c3c3c;
+  font-size: 13px;
+  font-weight: 400;
+  .tip {
+    // margin-left: 24px;
+    font-size: 10px;
+    color: #8c8c8c;
+    line-height: 12px;
+  }
+
+  .footItem {
+    line-height: 12px;
+    height: 12px;
+    margin-right: 16px;
+  }
+
+  .active {
+    &:hover {
+      color: #0171f6 !important;
+      cursor: pointer;
+    }
+  }
+
+  .notAllowed {
+    color: #bfbfbf;
+    cursor: not-allowed;
+  }
+}
+
+.rememberProxy {
+  margin-right: 10px;
+  line-height: 32px !important;
+  .ant-checkbox-inner {
+    top: -2px;
+  }
+}
+
+.modalFoot {
+  height: 12px;
+  .footItem {
+    line-height: 12px;
+    height: 12px;
+  }
+}

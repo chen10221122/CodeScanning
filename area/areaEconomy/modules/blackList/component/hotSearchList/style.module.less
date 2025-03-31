@@ -1,0 +1,107 @@
+.dropdownContent {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  background-color: #fff;
+  width: 480px;
+  height: 240px;
+  overflow-y: overlay;
+  border-radius: 4px;
+  box-shadow: 0px 4px 22px 6px rgba(0, 0, 0, 0.05), 0px 3px 6px -4px rgba(0, 0, 0, 0.12);
+  font-size: 14px;
+  & > div {
+    height: auto;
+  }
+  &::after {
+    position: sticky;
+    display: block;
+    content: '';
+    width: 100%;
+    height: 12px;
+    background: #fff;
+    bottom: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    background-color: #cfcfcf;
+  }
+
+  &.dropdownContentNormal {
+    padding: 0 12px;
+    .dropdownTitle {
+      height: 22px;
+      font-weight: 500;
+      color: #333333;
+      line-height: 22px;
+      margin-top: 6px;
+    }
+    .dropdownItemNormalContent {
+      margin-top: 12px;
+      height: 21px;
+      line-height: 21px;
+      cursor: pointer;
+      color: #262626;
+      &:hover {
+        color: #0171f6;
+      }
+    }
+  }
+  .dropdownItemContent {
+    display: flex;
+    overflow: hidden;
+    align-items: flex-start;
+    color: #111111;
+    line-height: 21px;
+    padding: 6px 22px 6px 12px;
+    cursor: pointer;
+    &:hover {
+      color: #0171f6;
+      background: rgba(1, 113, 246, 0.04);
+    }
+    .dropdownItemIcon {
+      flex-shrink: 0;
+      width: 13px;
+      height: 21px;
+      margin-right: 8px;
+      background: url(../../images/normalSearchIcon.svg) no-repeat 100% 50% / contain;
+    }
+    .dropdownItemRight {
+      .dropdownItemText {
+        margin-right: 8px;
+      }
+      .dropdownItemTag {
+        white-space: nowrap;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.hotSearchListShow {
+  margin-left: 32px;
+  display: inline-flex;
+  align-items: center;
+  .hotSearchIcon {
+    width: 24px;
+    height: 12px;
+    margin-right: 8px;
+    background: url('./../../images/hotSearch@2x.png') no-repeat 100% 100% / contain;
+  }
+  .splitLine {
+    width: 1px;
+    height: 12px;
+    background: #e9e9e9;
+  }
+  .showContent {
+    margin-left: 16px;
+    width: 276px;
+    height: 18px;
+    overflow: hidden;
+    .showContentDetail {
+      width: 276px;
+      cursor: pointer;
+    }
+  }
+}

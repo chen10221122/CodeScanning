@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon_qygy_kh</title>
+    <g id="区域融资" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2-1区域融资-再融资" transform="translate(-234.000000, -683.000000)">
+            <g id="编组-10" transform="translate(234.000000, 679.000000)">
+                <g id="编组-44" transform="translate(0.000000, 4.000000)">
+                    <g id="编组-39" transform="translate(1.500000, 1.500000)">
+                        <path d="M2.22124833,9.15737625 C3.01594032,9.68959555 3.97172074,10 5,10 C7.76142375,10 10,7.76142375 10,5 C10,2.23857625 7.76142375,0 5,0 C2.23857625,0 0,2.23857625 0,5 C0,6.14601235 0.385553254,7.2019739 1.03402394,8.04524885" id="路径" stroke="#5693FF" stroke-width="0.9"></path>
+                        <line x1="0" y1="5" x2="10" y2="5" id="路径-10" stroke="#5693FF" stroke-width="0.9"></line>
+                        <line x1="5" y1="0" x2="5" y2="10" id="路径-11" stroke="#5693FF"></line>
+                        <circle id="椭圆形备份-2" stroke="#98BCFD" stroke-width="0.9" fill="#FFFFFF" cx="5" cy="5" r="2"></circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
