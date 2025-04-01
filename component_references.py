@@ -27,56 +27,6 @@ def find_component_references(content: str, component_name: str):
     print(f"\n[DEBUG] 查找组件引用: {component_name}")
     escaped_name = re.escape(component_name)  # 转义特殊字符（如 . $ 等）
     
-    # 针对History组件的特殊处理，添加更宽松的匹配模式
-    if component_name == "History":
-        print(f"[DEBUG] 检测到History组件，使用特殊匹配模式")
-        # 在DragPageLayout组件的leftNode属性中使用的History组件
-        special_patterns = [
-            # 匹配DragPageLayout的leftNode属性中的History组件
-            r'leftNode\s*=\s*\{\s*<\s*History\b[^>]*?(?:/>|>[\s\S]*?</\s*History>)\s*\}',
-            # 匹配leftNode属性中的History组件（更宽松的模式）
-            r'leftNode\s*=\s*\{\s*<\s*History',
-            # 匹配任何位置的History组件（完整标签）
-            r'<\s*History\b[^>]*?(?:/>|>[\s\S]*?</\s*History>)',
-            # 匹配任何位置的History组件（开始标签）
-            r'<\s*History\b[^>]*?(?:/>|>)',
-            # 匹配属性值中的History组件
-            r'=\s*\{\s*<\s*History\b[^>]*?(?:/>|>[\s\S]*?</\s*History>)\s*\}',
-            # 匹配任何位置的History组件（非常宽松的模式）
-            r'<History',
-        ]
-        
-        for i, pattern in enumerate(special_patterns):
-            matches = list(re.finditer(pattern, content, re.DOTALL))
-            if matches:
-                print(f"[DEBUG] History特殊模式 {i+1} 匹配到 {len(matches)} 个结果")
-                for m in matches[:2]:  # 只显示前2个匹配结果
-                    match_text = content[m.start():m.start()+50].replace('\n', '\\n')
-                    start_line = content[:m.start()].count('\n') + 1
-                    print(f"  - 行 {start_line}: {match_text}...")
-                    
-                # 直接返回匹配结果
-                line_numbers = set()
-                for m in matches:
-                    start = m.start()
-                    line_number = content[:start].count('\n') + 1
-                    line_numbers.add(line_number)
-                result = sorted(map(str, line_numbers))
-                print(f"[DEBUG] History组件特殊匹配行号: {result}")
-                return result
-                
-        # 如果特殊模式都没有匹配到，尝试搜索文件中所有包含History的行
-        print(f"[DEBUG] 特殊模式未匹配到History组件，尝试搜索所有包含History的行")
-        lines = content.split('\n')
-        history_lines = []
-        for i, line in enumerate(lines):
-            if 'History' in line:
-                print(f"  - 行 {i+1}: {line[:50]}...")
-                history_lines.append(str(i+1))
-        
-        if history_lines:
-            print(f"[DEBUG] 找到包含History的行: {history_lines}")
-            return history_lines
     
     patterns = [
         # 1️⃣ **基本JSX标签**
@@ -85,6 +35,9 @@ def find_component_references(content: str, component_name: str):
         
         # 匹配自闭合 JSX 标签（支持任意多行属性）- 增强版，更宽松的空格处理
         rf'<\s*{escaped_name}\b[\s\S]*?\/\s*>',
+        
+        # 匹配组件的子组件引用（如 Timeline.Item）
+        rf'<\s*{escaped_name}\.\w+\b[^>]*?(?:/>|>)',
         
         # 2️⃣ **条件渲染中的组件引用**
         # 处理条件渲染中的组件引用 (&&) - 包括花括号包裹和不包裹的情况 - 增强版
@@ -126,25 +79,18 @@ def find_component_references(content: str, component_name: str):
         rf'\b[a-zA-Z][\w]*\(\s*{escaped_name}\b[^(]*?\)',
 
         # 4️⃣ **styled-components 样式组件**
-        # ✅ `const StyledAiMain = styled(AiMain)`
         rf'const\s+[A-Z][\w]*?\s*=\s*styled\(\s*{component_name}\s*\)',
 
         # 5️⃣ **HOC 高阶组件包装**
-        # ✅ `export default withRouter(AiMain);`
-        # ✅ `export default connect(mapState, mapDispatch)(AiMain);`
         rf'(?:connect|withRouter|withStyles|withTheme|with[A-Z][\w]*)\(\s*{component_name}\s*\)',
 
         # 6️⃣ **React.memo 或 forwardRef 包装**
-        # ✅ `export default React.memo(AiMain);`
-        # ✅ `export default React.forwardRef(AiMain);`
         rf'(?:React\.)?(memo|forwardRef)\(\s*{component_name}\s*\)',
 
         # 7️⃣ **React.lazy 动态导入**
-        # ✅ `const LazyAiMain = React.lazy(() => import("./AiMain"));`
         rf'(?:React\.)?lazy\(\s*\(\s*=>\s*import\([\'"]{component_name}[\'"]\)\s*\)\s*\)',
 
         # 8️⃣ **Suspense 包装的组件**
-        # ✅ `<Suspense fallback={<Loader />}><AiMain /></Suspense>` - 增强版
         rf'<\s*Suspense[^>]*?>[\s\S]*?<\s*{component_name}[^>]*?>[\s\S]*?</\s*Suspense\s*>',
     ]
 
@@ -165,21 +111,8 @@ def find_component_references(content: str, component_name: str):
                 print(f"  - 行 {start_line}: {match_text}...")
         else:
             pattern_matches[i] = []
-    
-    # 如果是History组件且没有匹配到任何结果，尝试更宽松的匹配
-    if component_name == "History" and not references:
-        print(f"[DEBUG] 未找到 {component_name} 组件引用，尝试更宽松的匹配")
-        # 尝试更宽松的JSX标签匹配
-        jsx_pattern = r'<\s*History\b[^>]*?(?:/>|>)'
-        matches = list(re.finditer(jsx_pattern, content, re.DOTALL))
-        if matches:
-            print(f"[DEBUG] 宽松模式匹配到 {len(matches)} 个结果")
-            for m in matches:
-                match_text = content[m.start():m.start()+50].replace('\n', '\\n')
-                start_line = content[:m.start()].count('\n') + 1
-                print(f"  - 行 {start_line}: {match_text}...")
-                references.append(m)
 
+    # 打印每个模式的匹配结果
     line_numbers = set()
     for m in references:
         start = m.start()
