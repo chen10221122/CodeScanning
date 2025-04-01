@@ -12,6 +12,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from file_scanner import FileScanner
 from component_analyzer import ComponentAnalyzer
 from optimized_report_generator import ReportGenerator
+from component_index_manager import ComponentIndexManager
 
 class ReactScanner:
     """React组件扫描器
@@ -33,10 +34,12 @@ class ReactScanner:
         - root_path: 项目根目录的Path对象
         - file_scanner: 用于扫描React文件的扫描器
         - component_analyzer: 用于分析组件定义和引用的分析器
+        - index_manager: 用于管理组件定义的本地索引
         """
         self.root_path = Path(path)
         self.file_scanner = FileScanner(path, parallel=parallel, workers=workers, max_files=max_files)
         self.component_analyzer = ComponentAnalyzer()
+        self.index_manager = ComponentIndexManager(path)
         self.parallel = parallel
         self.workers = workers
         self.scan_start_time = 0
@@ -72,32 +75,43 @@ class ReactScanner:
         
         # 第一阶段：收集所有文件中的组件定义
         print("Phase 1: Collecting component definitions...")
-        if self.parallel and len(react_files) > 10:  # 只有文件数量足够多时才使用并行
-            # 并行读取文件内容
-            print("Reading files in parallel...")
-            file_contents = FileScanner.read_files_parallel(react_files, self.workers)
-            
-            # 并行收集组件定义
-            print("Collecting component definitions in parallel...")
-            with ThreadPoolExecutor(max_workers=self.workers) as executor:
-                futures = []
-                with tqdm(total=len(file_contents), desc="Collecting definitions", unit="file") as pbar:
-                    for file_path, content in file_contents.items():
-                        futures.append(
-                            executor.submit(self._collect_definitions_wrapper, file_path, content)
-                        )
-                    
-                    for future in as_completed(futures):
-                        future.result()  # 获取结果，但我们不需要返回值
-                        pbar.update(1)
+        
+        # 尝试从本地索引加载组件定义
+        cached_definitions = self.index_manager.load_index(react_files)
+        if cached_definitions:
+            print("Loading component definitions from local index...")
+            self.component_analyzer.component_definitions = cached_definitions
         else:
-            # 串行处理
-            with tqdm(total=len(react_files), desc="Collecting definitions", unit="file") as pbar:
-                for file_path in react_files:
-                    content = FileScanner.read_file_content(file_path)
-                    if content:  # 只有成功读取文件内容才进行分析
-                        self.component_analyzer.collect_component_definitions(file_path, self.root_path, content)
-                    pbar.update(1)
+            print("Scanning files for component definitions...")
+            if self.parallel and len(react_files) > 10:  # 只有文件数量足够多时才使用并行
+                # 并行读取文件内容
+                print("Reading files in parallel...")
+                file_contents = FileScanner.read_files_parallel(react_files, self.workers)
+                
+                # 并行收集组件定义
+                print("Collecting component definitions in parallel...")
+                with ThreadPoolExecutor(max_workers=self.workers) as executor:
+                    futures = []
+                    with tqdm(total=len(file_contents), desc="Collecting definitions", unit="file") as pbar:
+                        for file_path, content in file_contents.items():
+                            futures.append(
+                                executor.submit(self._collect_definitions_wrapper, file_path, content)
+                            )
+                        
+                        for future in as_completed(futures):
+                            future.result()  # 获取结果，但我们不需要返回值
+                            pbar.update(1)
+            else:
+                # 串行处理
+                with tqdm(total=len(react_files), desc="Collecting definitions", unit="file") as pbar:
+                    for file_path in react_files:
+                        content = FileScanner.read_file_content(file_path)
+                        if content:  # 只有成功读取文件内容才进行分析
+                            self.component_analyzer.collect_component_definitions(file_path, self.root_path, content)
+                        pbar.update(1)
+            
+            # 保存组件定义到本地索引
+            self.index_manager.save_index(self.component_analyzer.component_definitions, react_files)
         
         # 打印收集到的组件定义数量
         component_count = len(self.component_analyzer.component_definitions)

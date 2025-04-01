@@ -1,0 +1,33 @@
+{
+  "component_definitions": {
+    "Wrapper": "d:\\workspace\\demo\\CodeScanning2\\ai\\modules\\leftTab\\index.tsx",
+    "AiCore": "d:\\workspace\\demo\\CodeScanning2\\ai\\aiCore.tsx",
+    "Outer": "d:\\workspace\\demo\\CodeScanning2\\ai\\modules\\history.tsx",
+    "AiSide": "d:\\workspace\\demo\\CodeScanning2\\ai\\side.tsx",
+    "ListRenderer": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\ListRenderer.tsx",
+    "Card": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\answer\\card.tsx",
+    "Container": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\answer\\title.tsx",
+    "Content": "d:\\workspace\\demo\\CodeScanning2\\ai\\modules\\content\\index.tsx",
+    "CustomService": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\answer\\customService.tsx",
+    "Feedback": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\answer\\feedback.tsx",
+    "StopButton": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\answer\\stopButton.tsx",
+    "Thinking": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\answer\\thinking.tsx",
+    "Title": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\answer\\title.tsx",
+    "Func": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\queryArea\\func.tsx",
+    "EditStyle": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\queryArea\\index.tsx",
+    "QueryArea": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\queryArea\\index.tsx",
+    "Caret": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\queryArea\\index.tsx",
+    "ArrowRight": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\queryArea\\index.tsx",
+    "Tags": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\queryArea\\tags.tsx",
+    "AnswerTags": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\queryArea\\tags.tsx",
+    "MainTags": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\queryArea\\tags.tsx",
+    "Image": "d:\\workspace\\demo\\CodeScanning2\\ai\\modules\\leftTab\\components\\image.tsx",
+    "Icon": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\svg\\base.tsx",
+    "Wrap": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\svg\\base.tsx",
+    "Tool": "d:\\workspace\\demo\\CodeScanning2\\ai\\components\\tool\\index.tsx",
+    "History": "d:\\workspace\\demo\\CodeScanning2\\ai\\modules\\history.tsx",
+    "LeftTab": "d:\\workspace\\demo\\CodeScanning2\\ai\\modules\\leftTab\\index.tsx",
+    "YYYYMMDDHHmmss": "d:\\workspace\\demo\\CodeScanning2\\ai\\utils\\sessionId.ts"
+  },
+  "timestamp": 1743490445.740789
+}

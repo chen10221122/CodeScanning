@@ -25,34 +25,6 @@ class ComponentAnalyzer:
         self.component_references: Dict[str, List[str]] = {}  # 组件名 -> 引用位置列表
         self.component_definitions: Dict[str, str] = {}      # 组件名 -> 定义文件路径
         self.imports: Dict[str, str] = {}                    # 导入项 -> 来源模块
-
-    # def analyze_file(self, file_path: Path, root_path: Path, content: str):
-    #     """分析单个文件中的组件定义和引用
-        
-    #     对文件内容进行全面分析，包括：
-    #     1. 解析import语句，记录组件的导入来源
-    #     2. 查找组件定义，记录组件的定义位置
-        
-    #     注意：此方法不再查找组件引用，引用分析已移至analyze_references方法
-        
-    #     Args:
-    #         file_path (Path): 要分析的文件路径
-    #         root_path (Path): 项目根目录路径，用于生成相对路径
-    #         content (str): 文件的内容
-        
-    #     异常处理：
-    #     - 捕获并记录分析过程中的任何异常
-    #     """
-    #     try:
-    #         # 解析import语句
-    #         self.imports.update(find_imports(content))
-
-    #         # 查找组件定义
-    #         components = find_component_definitions(content)
-    #         for component in components:
-    #             self.component_definitions[component] = str(file_path)
-    #     except Exception as e:
-    #         print(f"Error analyzing {file_path}: {str(e)}")
     
     def collect_component_definitions(self, file_path: Path, root_path: Path, content: str):
         """收集单个文件中的组件定义

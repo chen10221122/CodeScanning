@@ -7,8 +7,15 @@ import subprocess
 from pathlib import Path
 
 # React组件相关的正则表达式
-# 用于匹配import语句，支持解构导入和默认导入
-IMPORT_PATTERN = r'import\s+{?\s*([A-Za-z0-9_,\s]+)}?\s+from\s+[\'"]([@\w\-\._/]+)[\'"](.*?)'
+# 用于匹配import语句，支持解构导入、默认导入和命名空间导入
+IMPORT_PATTERNS = [
+    # 解构导入：import { Component1, Component2 } from 'module'
+    r'import\s+{\s*([A-Za-z0-9_,\s]+)}\s+from\s+[\'"]([@\w\-\._/]+)[\'"](.*?)',
+    # 默认导入：import DefaultComponent from 'module'
+    r'import\s+([A-Z][\w]*)\s+from\s+[\'"]([@\w\-\._/]+)[\'"](.*?)',
+    # 命名空间导入：import * as Components from 'module'
+    r'import\s+\*\s+as\s+([A-Z][\w]*)\s+from\s+[\'"]([@\w\-\._/]+)[\'"](.*?)'
+]
 
 # 用于匹配不同类型的React组件定义的正则表达式列表
 COMPONENT_PATTERNS = [
@@ -46,7 +53,7 @@ COMPONENT_PATTERNS = [
 def find_imports(content: str):
     """解析文件中的import语句
     
-    使用正则表达式匹配文件中的import语句，支持解构导入和默认导入。
+    使用正则表达式匹配文件中的import语句，支持解构导入、默认导入和命名空间导入。
     
     Args:
         content (str): 要分析的文件内容
@@ -57,13 +64,16 @@ def find_imports(content: str):
     示例：
     - import { Component } from 'react'
     - import DefaultComponent from './components'
+    - import * as Components from './components'
     """
     imports = {}
-    for match in re.finditer(IMPORT_PATTERN, content):
-        imported_items = [imp.strip() for imp in match.group(1).split(',')]
-        source = match.group(2)
-        for item in imported_items:
-            imports[item] = source
+    for pattern in IMPORT_PATTERNS:
+        for match in re.finditer(pattern, content):
+            imported_items = [imp.strip() for imp in match.group(1).split(',')] if '{' in match.group(0) else [match.group(1)]
+            source = match.group(2)
+            for item in imported_items:
+                if item and not item.startswith('use') and not item.endswith('Provider'):  # 过滤掉Hooks和Context Provider
+                    imports[item] = source
     return imports
 
 def find_component_definitions(content: str):
@@ -71,7 +81,7 @@ def find_component_definitions(content: str):
     
     使用预定义的正则表达式模式匹配不同类型的React组件定义，
     包括类组件、函数组件、箭头函数组件、HOC包装组件等。
-    过滤掉常量数组定义如FEEDBACK_TYPE。
+    同时识别子组件和导入的组件。
     
     Args:
         content (str): 要分析的文件内容
@@ -80,54 +90,34 @@ def find_component_definitions(content: str):
         Set[str]: 组件名称集合
     """
     components = set()
+    
+    # 1. 查找直接定义的组件
     for pattern in COMPONENT_PATTERNS:
         for match in re.finditer(pattern, content):
             component_name = match.group(1)
-            # 过滤掉常量数组定义
-            if not (component_name.endswith('_TYPE') or component_name.isupper()):
+            # 过滤掉常量数组定义和非组件命名
+            if (not component_name.endswith('_TYPE')
+                and not component_name.isupper()
+                and not component_name.endswith('Context')
+                and not component_name.endswith('Provider')
+                and not component_name.startswith('use')):
                 components.add(component_name)
+    
+    # 2. 查找子组件定义
+    sub_component_pattern = r'(?:const|let|var)\s+([A-Z][\w]*?)\s*=\s*[^=]*?=>'  # 匹配组件内部定义的子组件
+    for match in re.finditer(sub_component_pattern, content):
+        component_name = match.group(1)
+        if not component_name.endswith('_TYPE') and not component_name.isupper():
+            components.add(component_name)
+    
+    # 3. 查找字符串形式的组件引用
+    string_component_pattern = r'[\'\"]((?:[A-Z][a-zA-Z]*?)+)[\'"]'  # 匹配字符串中的组件名称
+    for match in re.finditer(string_component_pattern, content):
+        component_name = match.group(1)
+        if (component_name.endswith('Component')
+            or any(word[0].isupper() for word in component_name.split())
+            and not component_name.endswith('_TYPE')
+            and not component_name.isupper()):
+            components.add(component_name)
+    
     return components
-
-
-# def find_component_references(content: str, component_name: str) -> list:
-#     """查找特定组件的引用
-    
-#     查找文件中对指定组件的所有引用，包括：
-#     - JSX标签形式的引用
-#     - styled-components中的引用
-#     - HOC包装中的引用
-#     - React.memo和forwardRef中的引用
-    
-#     Args:
-#         content (str): 要分析的文件内容
-#         component_name (str): 要查找的组件名称
-    
-#     Returns:
-#         List[str]: 组件被引用的行号列表
-#     """
-#     # 获取 Node.js 脚本的绝对路径
-#     js_script_path = Path(__file__).parent / "js-ast" / "find-component-references.js"
-    
-#     # 调用 Node.js 脚本
-#     cmd = [
-#         'node',
-#         str(js_script_path),
-#         json.dumps([content, component_name])  # 传递参数
-#     ]
-    
-#     try:
-#         result = subprocess.run(
-#             cmd,
-#             capture_output=True,
-#             text=True,
-#             encoding='utf-8',
-#             check=True
-#         )
-#         lines = json.loads(result.stdout)
-#         return [str(line) for line in lines]
-#     except subprocess.CalledProcessError as e:
-#         print("Node.js 脚本执行错误:", e.stderr)
-#         return []
-#     except json.JSONDecodeError:
-        # print("解析 Node.js 输出失败")
-        # return []

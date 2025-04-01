@@ -20,7 +20,7 @@ class FileScanner:
     它提供了递归扫描目录和读取文件内容的功能。
     """
     
-    def __init__(self, root_path: str, max_files: int = 5000, batch_size: int = 1000, parallel: bool = True, workers: int | None = None):
+    def __init__(self, root_path: str, max_files: int = 10000, batch_size: int = 1000, parallel: bool = True, workers: int | None = None):
         """初始化文件扫描器
         
         Args:
