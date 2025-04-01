@@ -3,7 +3,8 @@
 
 from pathlib import Path
 from typing import Dict, List, Set
-from utils import find_imports, find_component_definitions, find_component_references
+from utils import find_imports, find_component_definitions
+from component_references import find_component_references
 
 class ComponentAnalyzer:
     """React组件分析器
