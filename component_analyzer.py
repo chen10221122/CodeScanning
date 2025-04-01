@@ -53,6 +53,8 @@ class ComponentAnalyzer:
 
             # 查找组件引用
             all_components = set(self.component_definitions.keys())
+            print(f"查找组件引用所有组件 {all_components}")
+
             for component in all_components:
                 ref_lines = find_component_references(content, component)
                 if ref_lines:

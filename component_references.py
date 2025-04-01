@@ -25,17 +25,21 @@ def find_component_references(content: str, component_name: str):
         List[str]: 组件被引用的行号列表
     """
     print(f"\n[DEBUG] 查找组件引用: {component_name}")
+    # print(f"\n[DEBUG] 组件内容: {content}")
     escaped_name = re.escape(component_name)  # 转义特殊字符（如 . $ 等）
     
     
     patterns = [
+        # 新增备选方案：匹配任意以<开头的组件引用
+        rf'<\s*({re.escape(component_name)}\b(?:\.[\w]+)?)',
+        # 新增备选方案：匹配命名空间子组件
+        rf'<\s*{escaped_name}\.[\w]+\b',
+        
         # 1️⃣ **基本JSX标签**
         # 匹配完整 JSX 标签（支持任意多行属性）- 增强版，更宽松的空格处理
         rf'<\s*{escaped_name}\b(\s+[^>]*?|\s*?)>.*?<\s*/\s*{escaped_name}\s*>',
-        
         # 匹配自闭合 JSX 标签（支持任意多行属性）- 增强版，更宽松的空格处理
         rf'<\s*{escaped_name}\b[\s\S]*?\/\s*>',
-        
         # 匹配组件的子组件引用（如 Timeline.Item）
         rf'<\s*{escaped_name}\.\w+\b[^>]*?(?:/>|>)',
         
@@ -97,6 +101,15 @@ def find_component_references(content: str, component_name: str):
     references = []
     pattern_matches = {}
     
+    # 过滤内置组件
+    builtin_components = {
+        'div', 'span', 'a', 'button', 'input', 'img', 'ul', 'li', 'p', 'h1', 'h2', 'h3', 'form',
+        'table', 'tr', 'td', 'th', 'thead', 'tbody', 'tfoot', 'label', 'select', 'option', 'textarea',
+        'nav', 'header', 'footer', 'main', 'section', 'article', 'aside', 'details', 'dialog', 'summary',
+        'figure', 'figcaption', 'picture', 'source', 'time', 'data', 'meter', 'progress', 'output',
+        'iframe', 'object', 'param', 'video', 'audio', 'track', 'embed', 'canvas', 'svg', 'math'
+    }
+    
     # 记录每个模式的匹配结果
     for i, pattern in enumerate(patterns):
         matches = list(re.finditer(pattern, content, re.DOTALL))
@@ -118,6 +131,18 @@ def find_component_references(content: str, component_name: str):
         start = m.start()
         line_number = content[:start].count('\n') + 1
         line_numbers.add(line_number)
+    
+    if not line_numbers:
+        print(f"[DEBUG] 正则匹配无结果，启用逐行扫描")
+        print(f"[DEBUG] contentcontentcontent {content}")
+        for line_num, line in enumerate(content.split('\n'), 1):
+            # 检查是否包含组件标签，同时排除内置组件
+            if f"<{component_name}" in line \
+                    and component_name not in builtin_components \
+                    and not re.search(r'<\s*(Suspense|Fragment|Profiler|StrictMode|SuspenseList|React\.Fragment)\b', line) \
+                    and not any(component_name.lower() == builtin.lower() for builtin in builtin_components):
+                print(f"[DEBUG] 行 {line_num} 匹配到组件 {component_name}: {line[:100]}")
+                line_numbers.add(line_num)
     
     result = sorted(map(str, line_numbers))
     print(f"[DEBUG] 组件 {component_name} 引用行号: {result}")
