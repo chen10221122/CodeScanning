@@ -2,7 +2,7 @@
 
 ## 元数据
 - **文档类型**: React组件分析
-- **生成时间**: 2025-03-31 17:37:39
+- **生成时间**: 2025-04-01 08:30:15
 - **组件总数**: 25
 - **文档用途**: 组件依赖关系分析
 - **适用场景**: 代码审查、架构分析、重构规划
@@ -261,7 +261,7 @@
 - `components\queryArea\func.tsx:40,49`
 - `components\queryArea\index.tsx:330,375`
 - `components\queryArea\search.tsx:119,149`
-- `components\tool\index.tsx:16`
+- `components\tool\index.tsx:10,16`
 - `modules\content\index.tsx:17,81`
 - `modules\leftTab\index.tsx:31,45`
 **组件类型**: 模块组件

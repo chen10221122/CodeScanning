@@ -107,43 +107,21 @@ def find_component_references(content: str, component_name: str):
     escaped_name = re.escape(component_name)  # 转义特殊字符（如 . $ 等）
     patterns = [
         
-                # 核心匹配模式：处理各种 JSX 语法形态
-        rf'''
-        <{escaped_name}                # 组件开始标签
-        (?:                             # 匹配属性部分
-            \s+                         # 属性前的空格
-            (?:                         
-                [^>]*?                  # 非贪婪匹配属性（排除>符号）
-                |                       # 或空属性
-            )
-        )?                             
-        (?:                             # 匹配标签闭合方式
-            \/>                        # 自闭合标签
-            |                           # 或完整闭合标签
-            >.*?<\/{escaped_name}\s*>  
-        )
-        ''',
-        
         # 处理三元表达式中的组件（如 : <AiMain />）
         rf':\s*<{escaped_name}\b[^>]*>',
         
-        # 匹配高阶组件形式（包括换行情况）
-        rf'''
-        (?:                         # 匹配 HOC 函数名
-            connect|withRouter|
-            styled|memo|forwardRef
-        )
-        $                          # 参数开始
-        [\s\n]*                     # 允许换行和空格
-        {escaped_name}              # 目标组件
-        [\s\n]*                     
-        $                          
-        '''
+        # 处理条件渲染中的组件引用
+        rf'\b{escaped_name}\b\s*&&\s*<{escaped_name}\b[^>]*>',
+        rf'\b{escaped_name}\b\s*\?\s*<{escaped_name}\b[^>]*>',
+        
         # 匹配完整 JSX 标签（支持任意多行属性）
         rf'<{escaped_name}\b(\s+[^>]*?|\s*?)>.*?</{escaped_name}\s*>',
         
         # 匹配自闭合 JSX 标签（支持任意多行属性）
         rf'<{escaped_name}\b[\s\S]*?\/\s*>',
+        
+        # 匹配完整 JSX 标签（支持任意多行属性）
+        rf'<{escaped_name}\b(\s+[^>]*?|\s*?)>.*?<\/{escaped_name}\s*>',
         
         # 精准匹配三元运算符中的组件（如 : <AiMain ... />）
         rf':\s*<{escaped_name}\b[\s\S]*?<\/{escaped_name}\s*>|\/{escaped_name}\s*>',
