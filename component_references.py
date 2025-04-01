@@ -134,7 +134,7 @@ def find_component_references(content: str, component_name: str):
     
     if not line_numbers:
         print(f"[DEBUG] 正则匹配无结果，启用逐行扫描")
-        print(f"[DEBUG] contentcontentcontent {content}")
+        # print(f"[DEBUG] contentcontentcontent {content}")
         for line_num, line in enumerate(content.split('\n'), 1):
             # 检查是否包含组件标签，同时排除内置组件
             if f"<{component_name}" in line \

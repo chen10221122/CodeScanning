@@ -70,20 +70,21 @@ class ReactScanner:
             
         print(f"\nAnalyzing {len(react_files)} React files for components...")
         
-        # 分析每个文件中的组件
+        # 第一阶段：收集所有文件中的组件定义
+        print("Phase 1: Collecting component definitions...")
         if self.parallel and len(react_files) > 10:  # 只有文件数量足够多时才使用并行
             # 并行读取文件内容
             print("Reading files in parallel...")
             file_contents = FileScanner.read_files_parallel(react_files, self.workers)
             
-            # 并行分析文件内容
-            print("Analyzing files in parallel...")
+            # 并行收集组件定义
+            print("Collecting component definitions in parallel...")
             with ThreadPoolExecutor(max_workers=self.workers) as executor:
                 futures = []
-                with tqdm(total=len(file_contents), desc="Analyzing components", unit="file") as pbar:
+                with tqdm(total=len(file_contents), desc="Collecting definitions", unit="file") as pbar:
                     for file_path, content in file_contents.items():
                         futures.append(
-                            executor.submit(self._analyze_file_wrapper, file_path, content)
+                            executor.submit(self._collect_definitions_wrapper, file_path, content)
                         )
                     
                     for future in as_completed(futures):
@@ -91,11 +92,53 @@ class ReactScanner:
                         pbar.update(1)
         else:
             # 串行处理
-            with tqdm(total=len(react_files), desc="Analyzing components", unit="file") as pbar:
+            with tqdm(total=len(react_files), desc="Collecting definitions", unit="file") as pbar:
                 for file_path in react_files:
                     content = FileScanner.read_file_content(file_path)
                     if content:  # 只有成功读取文件内容才进行分析
-                        self.component_analyzer.analyze_file(file_path, self.root_path, content)
+                        self.component_analyzer.collect_component_definitions(file_path, self.root_path, content)
+                    pbar.update(1)
+        
+        # 打印收集到的组件定义数量
+        component_count = len(self.component_analyzer.component_definitions)
+        print(f"\nCollected {component_count} component definitions.")
+        
+        # 第二阶段：分析所有文件中的组件引用
+        print("\nPhase 2: Analyzing component references...")
+        
+        # 读取所有文件内容
+        if self.parallel and len(react_files) > 10:
+            print("Reading files in parallel...")
+            file_contents = FileScanner.read_files_parallel(react_files, self.workers)
+        else:
+            print("Reading files sequentially...")
+            file_contents = {}
+            with tqdm(total=len(react_files), desc="Reading files", unit="file") as pbar:
+                for file_path in react_files:
+                    content = FileScanner.read_file_content(file_path)
+                    if content:  # 只有成功读取文件内容才添加到字典中
+                        file_contents[file_path] = content
+                    pbar.update(1)
+        
+        # 分析文件中的组件引用
+        if self.parallel and len(react_files) > 10:  # 只有文件数量足够多时才使用并行
+            # 使用已读取的文件内容进行引用分析
+            with ThreadPoolExecutor(max_workers=self.workers) as executor:
+                futures = []
+                with tqdm(total=len(file_contents), desc="Analyzing references", unit="file") as pbar:
+                    for file_path, content in file_contents.items():
+                        futures.append(
+                            executor.submit(self._analyze_references_wrapper, file_path, content)
+                        )
+                    
+                    for future in as_completed(futures):
+                        future.result()  # 获取结果，但我们不需要返回值
+                        pbar.update(1)
+        else:
+            # 串行处理
+            with tqdm(total=len(file_contents), desc="Analyzing references", unit="file") as pbar:
+                for file_path, content in file_contents.items():
+                    self.component_analyzer.analyze_references(file_path, self.root_path, content)
                     pbar.update(1)
         
         # 生成分析报告
@@ -118,8 +161,25 @@ class ReactScanner:
         print(f"\nTotal scan and analysis completed in {scan_duration:.2f} seconds.")
         print(f"Found {len(analysis_results['component_definitions'])} components with {sum(len(refs) for refs in analysis_results['component_references'].values())} references.")
     
-    def _analyze_file_wrapper(self, file_path, content):
-        """文件分析的包装函数，用于并行处理
+    def _collect_definitions_wrapper(self, file_path, content):
+        """组件定义收集的包装函数，用于并行处理
+        
+        Args:
+            file_path (Path): 文件路径
+            content (str): 文件内容
+            
+        Returns:
+            bool: 收集是否成功
+        """
+        try:
+            self.component_analyzer.collect_component_definitions(file_path, self.root_path, content)
+            return True
+        except Exception as e:
+            print(f"Error collecting definitions from {file_path}: {str(e)}")
+            return False
+            
+    def _analyze_references_wrapper(self, file_path, content):
+        """组件引用分析的包装函数，用于并行处理
         
         Args:
             file_path (Path): 文件路径
@@ -129,11 +189,23 @@ class ReactScanner:
             bool: 分析是否成功
         """
         try:
-            self.component_analyzer.analyze_file(file_path, self.root_path, content)
+            self.component_analyzer.analyze_references(file_path, self.root_path, content)
             return True
         except Exception as e:
-            print(f"Error analyzing {file_path}: {str(e)}")
+            print(f"Error analyzing references in {file_path}: {str(e)}")
             return False
+            
+    def _analyze_file_wrapper(self, file_path, content):
+        """文件分析的包装函数，用于并行处理（保留用于向后兼容）
+        
+        Args:
+            file_path (Path): 文件路径
+            content (str): 文件内容
+            
+        Returns:
+            bool: 分析是否成功
+        """
+        return self._analyze_references_wrapper(file_path, content)
 
 if __name__ == '__main__':
     # 使用argparse解析命令行参数

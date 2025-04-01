@@ -170,6 +170,38 @@ class FileScanner:
         return decorator
 
     @staticmethod
+    def read_files_parallel(file_paths: List[Path], workers: int | None = None) -> Dict[Path, str]:
+        """并行读取多个文件的内容
+        
+        使用线程池并行读取多个文件的内容，支持超时处理和错误处理。
+        
+        Args:
+            file_paths (List[Path]): 要读取的文件路径列表
+            workers (int): 并行工作线程数，默认为None（由系统决定）
+            
+        Returns:
+            Dict[Path, str]: 文件路径和内容的字典
+        """
+        workers = workers or max(1, multiprocessing.cpu_count() - 1)
+        file_contents = {}
+        
+        with ThreadPoolExecutor(max_workers=workers) as executor:
+            futures = {}
+            for file_path in file_paths:
+                futures[executor.submit(FileScanner.read_file_content, file_path)] = file_path
+            
+            for future in as_completed(futures):
+                file_path = futures[future]
+                try:
+                    content = future.result()
+                    if content:  # 只保存成功读取的文件内容
+                        file_contents[file_path] = content
+                except Exception as e:
+                    print(f"Error reading {file_path}: {str(e)}")
+        
+        return file_contents
+
+    @staticmethod
     @timeout(30)
     def read_file_content(file_path: Path, chunk_size: int = 8192) -> str:
         """读取文件内容，支持不同编码和超时处理
@@ -222,32 +254,3 @@ class FileScanner:
         except Exception as e:
             print(f"Error reading {file_path}: {str(e)}")
             return ""
-            
-    @staticmethod
-    def read_files_parallel(file_paths: List[Path], max_workers: int | None = None) -> Dict[Path, str]:
-        """并行读取多个文件内容
-        
-        使用线程池并行读取多个文件，提高读取效率。
-        
-        Args:
-            file_paths (List[Path]): 要读取的文件路径列表
-            max_workers (int): 最大工作线程数，默认为None（由系统决定）
-            
-        Returns:
-            Dict[Path, str]: 文件路径到文件内容的映射
-        """
-        results = {}
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            future_to_file = {executor.submit(FileScanner.read_file_content, file_path): file_path 
-                             for file_path in file_paths}
-            
-            for future in as_completed(future_to_file):
-                file_path = future_to_file[future]
-                try:
-                    content = future.result()
-                    if content:  # 只保存成功读取的文件
-                        results[file_path] = content
-                except Exception as e:
-                    print(f"Error reading {file_path}: {str(e)}")
-        
-        return results
